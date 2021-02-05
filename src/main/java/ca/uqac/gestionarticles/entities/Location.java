@@ -16,6 +16,15 @@ public class Location {
     @ManyToOne
     Client client;
     private User createBy;
+    private int quantite;
+
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
 
     public Long getId() {
         return id;

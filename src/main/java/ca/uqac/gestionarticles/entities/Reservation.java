@@ -10,12 +10,29 @@ public class Reservation {
     private Long id;
     private String type;
     private Date date;
+    private Date date_remise;
     private Boolean satisfaite;
     private int quantity;
     @ManyToOne
     Article article;
     @ManyToOne
     Client client;
+
+    public Date getDate_remise() {
+        return date_remise;
+    }
+
+    public void setDate_remise(Date date_remise) {
+        this.date_remise = date_remise;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public Long getId() {
         return id;

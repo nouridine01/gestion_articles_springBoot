@@ -14,7 +14,7 @@ public class Client {
     List<Location> locations = new ArrayList<>();
     @OneToMany
     List<Reservation> reservations = new ArrayList<>();
-    @OneToOne
+    @OneToOne(mappedBy = "client")
     private User user;
 
     public long getId() {

@@ -15,6 +15,17 @@ public class Achat {
     private Client client;
     private User createBy;
 
+    public int getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
+    }
+
+    private int quantite;
+
+
     public Long getId() {
         return id;
     }

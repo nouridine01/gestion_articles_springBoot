@@ -15,12 +15,22 @@ public class Article {
     private double prix;
     private int quantite;
     private User createBy;
+    private Boolean louable;
+    private Boolean achetable;
     @OneToMany
-    List<Reservation> reservationEnCours = new ArrayList<>();
+    private List<Reservation> reservationEnCours = new ArrayList<>();
     @OneToMany
-    List<Achat> achatEffectues = new ArrayList<>();
+    private List<Achat> achatEffectues = new ArrayList<>();
     @OneToMany
-    List<Location> locationEnCours = new ArrayList<>();
+    private List<Location> locationEnCours = new ArrayList<>();
+
+    public Boolean getLouable() {
+        return louable;
+    }
+
+    public void setLouable(Boolean louable) {
+        this.louable = louable;
+    }
 
     public Long getId() {
         return id;

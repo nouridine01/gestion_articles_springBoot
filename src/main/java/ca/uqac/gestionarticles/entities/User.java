@@ -1,5 +1,7 @@
 package ca.uqac.gestionarticles.entities;
 
+import com.sun.istack.Nullable;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +18,6 @@ public class User {
     private String lastName;
     private String firstName;
     private Boolean active;
-    private String photo;
     @ManyToMany(fetch= FetchType.EAGER)
     private Collection<Role> roles=new ArrayList<>();
 
@@ -24,18 +25,19 @@ public class User {
         return roles;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
+    @OneToOne(mappedBy = "user")
+    private Client client;
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     //getters
     public long getId(){
