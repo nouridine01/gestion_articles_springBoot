@@ -1,8 +1,6 @@
 package ca.uqac.gestionarticles.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -12,34 +10,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    @NotEmpty
     private String login;
-    @NotEmpty
-    @Size(min = 8)
     private String password;
     private String pays;
-
-    @OneToMany( targetEntity=Article.class, mappedBy="user",fetch = FetchType.LAZY)
-    Collection<Article> articles = new ArrayList<>();
-
-    public String getPays() {
-        return pays;
-    }
-
-    public void setPays(String pays) {
-        this.pays = pays;
-    }
-
-
-    @ManyToMany(fetch= FetchType.EAGER)
-    private Collection<Role> roles=new ArrayList<>();
-
     private String lastName;
     private String firstName;
     private Boolean active;
     private String photo;
-
+    @ManyToMany(fetch= FetchType.EAGER)
+    private Collection<Role> roles=new ArrayList<>();
 
     public Collection<Role> getRoles() {
         return roles;
@@ -108,12 +87,11 @@ public class User {
         this.login = login;
     }
 
-    public Collection<Article> getArticles() {
-        return articles;
+    public String getPays() {
+        return pays;
     }
 
-    public void setArticles(Collection<Article> articles) {
-        this.articles = articles;
+    public void setPays(String pays) {
+        this.pays = pays;
     }
-
 }
