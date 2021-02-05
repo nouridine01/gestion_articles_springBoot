@@ -13,6 +13,7 @@ public class Achat {
     private Article article;
     @ManyToOne
     private Client client;
+    @ManyToOne
     private User createBy;
 
     public int getQuantite() {

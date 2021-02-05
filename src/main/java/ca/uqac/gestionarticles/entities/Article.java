@@ -14,14 +14,15 @@ public class Article {
     private Categorie categorie;
     private double prix;
     private int quantite;
+    @ManyToOne
     private User createBy;
     private Boolean louable;
     private Boolean achetable;
-    @OneToMany
+    @OneToMany(mappedBy = "article")
     private List<Reservation> reservationEnCours = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "article")
     private List<Achat> achatEffectues = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "article")
     private List<Location> locationEnCours = new ArrayList<>();
 
     public Boolean getLouable() {

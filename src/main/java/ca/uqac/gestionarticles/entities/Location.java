@@ -5,7 +5,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
+import javax.persistence.Entity;
 
+@Entity
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +17,7 @@ public class Location {
     Article article;
     @ManyToOne
     Client client;
+    @ManyToOne
     private User createBy;
     private int quantite;
 

@@ -10,11 +10,11 @@ public class Client {
     private long id;
     @OneToMany
     List<Achat> achats = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "client")
     List<Location> locations = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "client")
     List<Reservation> reservations = new ArrayList<>();
-    @OneToOne(mappedBy = "client")
+    @OneToOne
     private User user;
 
     public long getId() {
