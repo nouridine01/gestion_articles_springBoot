@@ -1,17 +1,17 @@
 package ca.uqac.gestionarticles.entities;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.util.Date;
-import javax.persistence.Entity;
 
 @Entity
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     @ManyToOne
     Article article;
@@ -20,6 +20,7 @@ public class Location {
     @ManyToOne
     private User createBy;
     private int quantite;
+
 
     public int getQuantite() {
         return quantite;

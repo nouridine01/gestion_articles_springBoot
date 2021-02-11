@@ -1,5 +1,7 @@
 package ca.uqac.gestionarticles.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,8 +11,12 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
-    private Date date_remise;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date_recup;
     private Boolean satisfaite;
     private int quantity;
     @ManyToOne
@@ -18,12 +24,12 @@ public class Reservation {
     @ManyToOne
     Client client;
 
-    public Date getDate_remise() {
-        return date_remise;
+    public Date getDate_recup() {
+        return date_recup;
     }
 
-    public void setDate_remise(Date date_remise) {
-        this.date_remise = date_remise;
+    public void setDate_recup(Date date_recup) {
+        this.date_recup = date_recup;
     }
 
     public int getQuantity() {
