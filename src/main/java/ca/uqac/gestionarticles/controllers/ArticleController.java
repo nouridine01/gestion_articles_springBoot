@@ -74,7 +74,7 @@ public class ArticleController {
         return "articles/edit";
     }
 
-    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateArticle", method = RequestMethod.POST)
     public String update (Model model , @Valid Article article, BindingResult br, HttpServletRequest request) {
         articleRepository.save(article);
         model.addAttribute("article",article);
