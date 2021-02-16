@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<div th:fragment="sidebar" class="col-xs-4 col-md-3 col-lg-2 sidebar">
+			<div class="sidebar-user">
+				<span>Connecté en tant que :</span>
+				<span>Nom Utilisateur</span>
+				<span><a href="#">Se déconnecter</a></span>
+			</div>
+			
+			<nav class="sidebar-nav">
+				<span>Navigation :</span>
+				<ul>
+					<li><a href="#">Achat / Location</a></li>
+					<li><a href="#">Réservations</a></li>
+					<li><a href="#">Historique des achats</a></li>
+					<li><a href="#">Historique des locations</a></li>
+					<li><a href="#">Gestion des clients</a></li>
+				</ul>
+			</nav>
+		</div>
+	</body>
+	
+</html>

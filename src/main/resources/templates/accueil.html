@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title>Accueil</title>
+	    <link  rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"
+	           th:href="@{css/bootstrap.min.css}" />          
+		<link  rel="stylesheet" type="text/css" href="../static/css/style.css" 
+			th:href="@{/css/style.css}" />
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		
+		   <div class="accueil">
+			    <h1>OUTILS 3000</h1>
+			    <a href="connexion" class="button button-1">Se connecter</a>
+		    </div>
+		    
+		</th:block>
+	</body>
+</html>
