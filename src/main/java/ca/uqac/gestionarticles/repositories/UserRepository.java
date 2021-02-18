@@ -16,4 +16,15 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("select u from User u where u.lastName like :x")
     public Page<Object> rechercher(@Param("x") String mc, Pageable pageable);
+
+    /*SELECT t.a
+     , SUM(t.b)
+     , AVG(t.c)
+  FROM (
+         SELECT 'q1' AS source, a, b, c, d FROM t1
+          UNION ALL
+         SELECT 'q2', t2.fee, t2.fi, t2.fo, 'fum' FROM t2
+       ) t
+ GROUP BY t.a
+ ORDER BY t.a*/
 }
