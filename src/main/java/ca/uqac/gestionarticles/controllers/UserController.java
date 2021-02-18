@@ -76,7 +76,10 @@ public class UserController {
 
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     public String update (Model model , @Valid User user, BindingResult br, HttpServletRequest request) {
-       userRepository.save(user);
+        User u = userRepository.findById(user.getId()).get();
+        user.setRoles(u.getRoles());
+        user.setClient(u.getClient());
+        userRepository.save(user);
         model.addAttribute("user",user);
         return "users/detail";
     }

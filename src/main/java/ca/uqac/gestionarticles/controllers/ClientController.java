@@ -75,6 +75,11 @@ public class ClientController {
 
     @RequestMapping(value = "/updateClient", method = RequestMethod.POST)
     public String update (Model model , @Valid Client client, BindingResult br, HttpServletRequest request) {
+        Client c = clientRepository.findById(client.getId()).get();
+        client.setUser(c.getUser());
+        client.setAchats(c.getAchats());
+        client.setLocations(c.getLocations());
+        client.setReservations(c.getReservations());
         clientRepository.save(client);
         model.addAttribute("client",client);
         return "clients/detail";

@@ -76,6 +76,11 @@ public class ArticleController {
 
     @RequestMapping(value = "/updateArticle", method = RequestMethod.POST)
     public String update (Model model , @Valid Article article, BindingResult br, HttpServletRequest request) {
+        Article a=articleRepository.findById(article.getId()).get();
+        article.setAchatEffectues(a.getAchatEffectues());
+        article.setLocationEnCours(a.getLocationEnCours());
+        article.setReservationEnCours(a.getReservationEnCours());
+        article.setCreateBy(a.getCreateBy());
         articleRepository.save(article);
         model.addAttribute("article",article);
         return "articles/detail";

@@ -37,7 +37,12 @@ public class CategorieController {
 
     @RequestMapping(value = "/deleteCategorie", method = RequestMethod.GET)
     public String delete(Long id,String mc,String page,String size) {
-        categorieRepository.deleteById(id);
+        try{
+            categorieRepository.deleteById(id);
+        }catch (Exception e){
+
+        }
+
         return "redirect:/categories?page="+page+"&mc="+mc+"&size="+size;
     }
 
@@ -76,6 +81,8 @@ public class CategorieController {
 
     @RequestMapping(value = "/updateCategorie", method = RequestMethod.POST)
     public String update (Model model , @Valid Categorie categorie, BindingResult br, HttpServletRequest request) {
+        Categorie c = categorieRepository.findById(categorie.getId()).get();
+        categorie.setArticles(c.getArticles());
         categorieRepository.save(categorie);
         model.addAttribute("categorie",categorie);
         return "categories/detail";
