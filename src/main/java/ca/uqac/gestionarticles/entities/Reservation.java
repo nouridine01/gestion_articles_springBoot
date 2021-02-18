@@ -17,7 +17,7 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_recup;
-    private Boolean satisfaite;
+    private Boolean satisfaite=false;
     private int quantity;
     @ManyToOne
     Article article;

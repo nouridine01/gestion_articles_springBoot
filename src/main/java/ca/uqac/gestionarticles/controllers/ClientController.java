@@ -23,13 +23,15 @@ public class ClientController {
     @RequestMapping(value = "/clients")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                         @RequestParam(name = "mc",defaultValue = "") String mc,
-                        @RequestParam(name = "size",defaultValue = "5")int size) {
+                        @RequestParam(name = "size",defaultValue = "5")int size,
+                        @RequestParam(name = "message",defaultValue = "")String msg) {
         Page<Client> liste =clientRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
         int[] pages = new int[liste.getTotalPages()];
         model.addAttribute("listes", liste.getContent());
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
+        if(!("".equals(msg))) model.addAttribute("message", msg);
         model.addAttribute("mc", mc);
         //retourne la vue employees.html
         return "clients/clients";
@@ -37,8 +39,14 @@ public class ClientController {
 
     @RequestMapping(value = "/deleteClient", method = RequestMethod.GET)
     public String delete(Long id,String mc,String page,String size) {
-        clientRepository.deleteById(id);
-        return "redirect:/clients?page="+page+"&mc="+mc+"&size="+size;
+
+        String msg="";
+        try{
+            clientRepository.deleteById(id);
+        }catch (Exception e){
+            msg="impossible de supprimer cet article";
+        }
+        return "redirect:/clients?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
     }
 
     @RequestMapping(value = "/detailClient", method = RequestMethod.GET)
@@ -75,6 +83,11 @@ public class ClientController {
 
     @RequestMapping(value = "/updateClient", method = RequestMethod.POST)
     public String update (Model model , @Valid Client client, BindingResult br, HttpServletRequest request) {
+        Client c = clientRepository.findById(client.getId()).get();
+        client.setUser(c.getUser());
+        client.setAchats(c.getAchats());
+        client.setLocations(c.getLocations());
+        client.setReservations(c.getReservations());
         clientRepository.save(client);
         model.addAttribute("client",client);
         return "clients/detail";

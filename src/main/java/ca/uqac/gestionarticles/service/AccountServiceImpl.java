@@ -7,6 +7,8 @@ import ca.uqac.gestionarticles.entities.User;
 import ca.uqac.gestionarticles.repositories.RoleRepository;
 import ca.uqac.gestionarticles.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,5 +43,17 @@ public class AccountServiceImpl implements  AccountService {
     @Override
     public User findUserByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    @Override
+    public String getCurrentUserLogin() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return username;
     }
 }

@@ -9,4 +9,5 @@ public interface AccountService {
     public Role saveRole(Role role);
     public void addRoleToUser(String userName, String role);
     public User findUserByLogin(String login);
+    public String getCurrentUserLogin();
 }

@@ -13,4 +13,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     @Query("select u from User u where u.login like :x")
     public Page<User> chercher(@Param("x") String mc, Pageable pageable);
+
+    @Query("select u from User u where u.lastName like :x")
+    public Page<Object> rechercher(@Param("x") String mc, Pageable pageable);
 }
