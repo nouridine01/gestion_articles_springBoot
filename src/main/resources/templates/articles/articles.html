@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title>Articles</title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		  		
+	  		<div class="listing">
+	  				
+  				<h2>Liste des articles :</h2>
+  				<table>	
+	  				<thead>
+	  					<tr>
+	  						<th>Nom</th>
+	  						<th>Categorie</th>
+	  						<th>Quantite</th>
+	  						<th>Prix</th>
+	  					</tr>
+	  				</thead>
+	  				<tbody>
+	  					<tr>
+	  						<td>Article 1</td>
+	  						<td>Categorie 1</td>
+	  						<td>10</td>
+	  						<td>20.00€</td>
+	  						<td class="list-button">
+	  							<a href="detailArticle?id=1" class="button-1">Détails</a>
+	  						</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-2">Réserver</a>
+	  						</td>
+	  					</tr>
+	  					<tr>
+	  						<td>Article 2</td>
+	  						<td>Categorie 1</td>
+	  						<td>10</td>
+	  						<td>20.00€</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-1">Détails</a>
+	  						</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-2">Réserver</a>
+	  						</td>
+	  					</tr>
+	  					<tr>
+	  						<td>Article 3</td>
+	  						<td>Categorie 2</td>
+	  						<td>10</td>
+	  						<td>20.00€</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-1">Détails</a>
+	  						</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-2">Réserver</a>
+	  						</td>
+	  					</tr>
+	  					<tr>
+	  						<td>Article 4</td>
+	  						<td>Categorie 3</td>
+	  						<td>10</td>
+	  						<td>20.00€</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-1">Détails</a>
+	  						</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-2">Réserver</a>
+	  						</td>
+	  					</tr>
+	  					<tr>
+	  						<td>Article 5</td>
+	  						<td>Categorie 3</td>
+	  						<td>10</td>
+	  						<td>20.00€</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-1">Détails</a>
+	  						</td>
+	  						<td class="list-button">
+	  							<a href="#" class="button-2">Réserver</a>
+	  						</td>
+	  					</tr>
+	  				</tbody>
+  				</table>
+  				
+  				<a href="createArticle" class="button button-1">Ajouter un article</a>
+	  		</div>
+		    
+		</th:block>
+	</body>
+</html>
