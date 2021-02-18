@@ -23,13 +23,15 @@ public class CategorieController {
     @RequestMapping(value = "/categories")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                         @RequestParam(name = "mc",defaultValue = "") String mc,
-                        @RequestParam(name = "size",defaultValue = "5")int size) {
+                        @RequestParam(name = "size",defaultValue = "5")int size,
+                        @RequestParam(name = "message",defaultValue = "")String msg) {
         Page<Categorie> liste =categorieRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
         int[] pages = new int[liste.getTotalPages()];
         model.addAttribute("listes", liste.getContent());
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
+        if(!("".equals(msg))) model.addAttribute("message", msg);
         model.addAttribute("mc", mc);
         //retourne la vue employees.html
         return "categories/categories";
@@ -37,13 +39,14 @@ public class CategorieController {
 
     @RequestMapping(value = "/deleteCategorie", method = RequestMethod.GET)
     public String delete(Long id,String mc,String page,String size) {
+        String msg="";
         try{
             categorieRepository.deleteById(id);
         }catch (Exception e){
-
+            msg="impossible de supprimer cet article";
         }
 
-        return "redirect:/categories?page="+page+"&mc="+mc+"&size="+size;
+        return "redirect:/categories?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
     }
 
     @RequestMapping(value = "/detailCategorie", method = RequestMethod.GET)

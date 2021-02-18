@@ -66,6 +66,7 @@ public class ReservationController {
             locationRepository.save(location);
         }
         reservation.setSatisfaite(true);
+        reservationRepository.save(reservation);
         model.addAttribute("article_id",id);
         return "reservations/form";
     }

@@ -23,13 +23,15 @@ public class UserController {
     @RequestMapping(value = "/users")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                         @RequestParam(name = "mc",defaultValue = "") String mc,
-                        @RequestParam(name = "size",defaultValue = "5")int size) {
+                        @RequestParam(name = "size",defaultValue = "5")int size,
+                        @RequestParam(name = "message",defaultValue = "")String msg) {
         Page<User> liste =userRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
         int[] pages = new int[liste.getTotalPages()];
         model.addAttribute("listes", liste.getContent());
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
+        if(!("".equals(msg))) model.addAttribute("message", msg);
         model.addAttribute("mc", mc);
         //retourne la vue employees.html
         return "users/users";
@@ -37,8 +39,13 @@ public class UserController {
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
     public String delete(Long id,String mc,String page,String size) {
-        userRepository.deleteById(id);
-        return "redirect:/users?page="+page+"&mc="+mc+"&size="+size;
+        String msg="";
+        try{
+            userRepository.deleteById(id);
+        }catch (Exception e){
+            msg="impossible de supprimer cet utilisateur";
+        }
+        return "redirect:/users?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
     }
 
     @RequestMapping(value = "/detailUser", method = RequestMethod.GET)
@@ -82,5 +89,20 @@ public class UserController {
         userRepository.save(user);
         model.addAttribute("user",user);
         return "users/detail";
+    }
+
+    @RequestMapping(value = "/recherche", method = RequestMethod.GET)
+    public String recherche(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
+                            @RequestParam(name = "mc",defaultValue = "") String mc,
+                            @RequestParam(name = "size",defaultValue = "5")int size
+                            ) {
+        Page<Object> liste =userRepository.rechercher("%"+mc+"%", PageRequest.of(page, size) );
+        int[] pages = new int[liste.getTotalPages()];
+        model.addAttribute("listes", liste.getContent());
+        model.addAttribute("pages", pages);
+        model.addAttribute("size", size);
+        model.addAttribute("pageCourante", page);
+        model.addAttribute("mc", mc);
+        return "users/recherche";
     }
 }

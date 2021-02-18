@@ -23,13 +23,15 @@ public class ArticleController {
     @RequestMapping(value = "/articles")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                         @RequestParam(name = "mc",defaultValue = "") String mc,
-                        @RequestParam(name = "size",defaultValue = "5")int size) {
+                        @RequestParam(name = "size",defaultValue = "5")int size,
+                        @RequestParam(name = "message",defaultValue = "")String msg) {
         Page<Article> liste =articleRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
         int[] pages = new int[liste.getTotalPages()];
         model.addAttribute("listes", liste.getContent());
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
+        if(!("".equals(msg))) model.addAttribute("message", msg);
         model.addAttribute("mc", mc);
         //retourne la vue employees.html
         return "articles/articles";
@@ -37,8 +39,14 @@ public class ArticleController {
 
     @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
     public String delete(Long id,String mc,String page,String size) {
-        articleRepository.deleteById(id);
-        return "redirect:/articles?page="+page+"&mc="+mc+"&size="+size;
+
+        String msg="";
+        try{
+            articleRepository.deleteById(id);
+        }catch (Exception e){
+            msg="impossible de supprimer cet article";
+        }
+        return "redirect:/articles?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
     }
 
     @RequestMapping(value = "/detailArticle", method = RequestMethod.GET)
