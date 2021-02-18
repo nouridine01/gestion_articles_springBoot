@@ -13,6 +13,9 @@ public class Location {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date_retour;
     @ManyToOne
     Article article;
     @ManyToOne
@@ -21,6 +24,14 @@ public class Location {
     private User createBy;
     private int quantite;
 
+
+    public Date getDate_retour() {
+        return date_retour;
+    }
+
+    public void setDate_retour(Date date_retour) {
+        this.date_retour = date_retour;
+    }
 
     public int getQuantite() {
         return quantite;
