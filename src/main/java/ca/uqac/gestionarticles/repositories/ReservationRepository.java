@@ -1,6 +1,5 @@
 package ca.uqac.gestionarticles.repositories;
 
-
 import ca.uqac.gestionarticles.entities.Reservation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
