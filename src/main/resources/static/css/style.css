@@ -224,7 +224,7 @@ input.button {
 .listing .list-button {
 	min-width: auto;
 	border: none;
-	padding: 5px 15px;
+	padding: 5px 5px 5px 25px;
 }
 
 .listing .list-button a {
@@ -237,6 +237,42 @@ input.button {
 .listing .list-button a:hover {
 	text-decoration: none;
 	filter: brightness(1.05);
+}
+
+.listing .pages {
+	
+}
+
+.listing .pages ul {
+	display: flex;
+	flex-flow: row nowrap;
+	margin-bottom: 35px;
+	padding: 0;
+	list-style: none;
+}
+
+.listing .pages li {
+	margin-left: 10px;
+}
+
+.listing .pages a {
+	padding: 7px 12px;
+	background-color: white;
+	border-radius: 7px;
+	text-align: center;
+	vertical-align: middle;
+	color: #444;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.listing .pages a:hover {
+	background-color: #C5E6E8;
+	text-decoration: none;
+}
+
+.listing .pages .page-active a {
+	background-color: #457B9D;
+	color: white;
 }
 
 /* *** DETAILS *** */
@@ -283,6 +319,11 @@ input.button {
 .create-form select {
 	min-width: 150;
 	height: 30px;
+}
+
+.create-form .error {
+	font-size: 1.2rem;
+	color: red;
 }
 
 

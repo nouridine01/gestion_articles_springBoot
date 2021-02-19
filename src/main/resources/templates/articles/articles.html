@@ -31,15 +31,23 @@
 	  						<td th:text="${a.quantite}"></td>
 	  						<td th:text="${a.prix} + '€'"></td>
 	  						<td class="list-button">
-	  							<a th:href="@{/detailArticle(id=${a.id})}" class="button-1">Détails</a>
+	  							<a th:href="@{/detailArticle(id=${a.id})}" class="button-2">Détails</a>
 	  						</td>
 	  						<td class="list-button">
-	  							<a href="#" class="button-2">Réserver</a>
+	  							<a href="#" class="button-1">Réserver</a>
 	  						</td>
 	  					</tr>
 	  					
 	  				</tbody>
   				</table>
+  				
+  				<div class="pages">
+  					<ul>
+  						<li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
+  							<a th:href="@{/articles(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index}"></a>
+  						</li>
+  					</ul>
+  				</div>
   				
   				<a href="createArticle" class="button button-1">Ajouter un article</a>
 	  		</div>

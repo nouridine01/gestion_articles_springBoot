@@ -1,7 +1,9 @@
 package ca.uqac.gestionarticles.controllers;
 
 import ca.uqac.gestionarticles.entities.Article;
+import ca.uqac.gestionarticles.entities.Categorie;
 import ca.uqac.gestionarticles.repositories.ArticleRepository;
+import ca.uqac.gestionarticles.repositories.CategorieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,8 @@ import javax.validation.Valid;
 public class ArticleController {
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private CategorieRepository categorieRepository;
 
     @RequestMapping(value = "/articles")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -38,7 +42,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/deleteArticle", method = RequestMethod.GET)
-    public String delete(Long id,String mc,String page,String size) {
+    public String delete(Model model, Long id) {
 
         String msg="";
         try{
@@ -46,7 +50,7 @@ public class ArticleController {
         }catch (Exception e){
             msg="impossible de supprimer cet article";
         }
-        return "redirect:/articles?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
+        return "redirect:/articles";
     }
 
     @RequestMapping(value = "/detailArticle", method = RequestMethod.GET)
@@ -59,6 +63,9 @@ public class ArticleController {
 
     @RequestMapping(value = "/createArticle", method = RequestMethod.GET)
     public String form (Model model) {
+        Page<Categorie> categorieListe = categorieRepository.chercher("%%", PageRequest.of(0, 5));
+        model.addAttribute("categorieListe", categorieListe.getContent());
+    	
         model.addAttribute("article", new Article());
         return "articles/form";
     }
@@ -67,6 +74,9 @@ public class ArticleController {
     public String save (Model model , @Valid Article article, BindingResult br, HttpServletRequest request) {
 
         if(br.hasErrors()) {
+            Page<Categorie> categorieListe = categorieRepository.chercher("%%", PageRequest.of(0, 5));
+            model.addAttribute("categorieListe", categorieListe.getContent()); 	
+        	
             model.addAttribute("article",article);
             return "articles/form";
         }
@@ -78,6 +88,9 @@ public class ArticleController {
 
     @RequestMapping(value = "/editArticle", method = RequestMethod.GET)
     public String edit (Model model,Long id) {
+        Page<Categorie> categorieListe = categorieRepository.chercher("%%", PageRequest.of(0, 5));
+        model.addAttribute("categorieListe", categorieListe.getContent());
+    	
         model.addAttribute("article",articleRepository.findById(id).get());
         return "articles/edit";
     }
