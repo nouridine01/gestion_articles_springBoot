@@ -24,66 +24,20 @@
 	  					</tr>
 	  				</thead>
 	  				<tbody>
-	  					<tr>
-	  						<td>Article 1</td>
-	  						<td>Categorie 1</td>
-	  						<td>10</td>
-	  						<td>20.00€</td>
+	  				
+	  					<tr th:each="a:${listes}">
+	  						<td th:text="${a.nom}"></td>
+	  						<td th:text="${a.categorie.nom}"></td>
+	  						<td th:text="${a.quantite}"></td>
+	  						<td th:text="${a.prix} + '€'"></td>
 	  						<td class="list-button">
-	  							<a href="detailArticle?id=1" class="button-1">Détails</a>
+	  							<a th:href="@{/detailArticle(id=${a.id})}" class="button-1">Détails</a>
 	  						</td>
 	  						<td class="list-button">
 	  							<a href="#" class="button-2">Réserver</a>
 	  						</td>
 	  					</tr>
-	  					<tr>
-	  						<td>Article 2</td>
-	  						<td>Categorie 1</td>
-	  						<td>10</td>
-	  						<td>20.00€</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-1">Détails</a>
-	  						</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-2">Réserver</a>
-	  						</td>
-	  					</tr>
-	  					<tr>
-	  						<td>Article 3</td>
-	  						<td>Categorie 2</td>
-	  						<td>10</td>
-	  						<td>20.00€</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-1">Détails</a>
-	  						</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-2">Réserver</a>
-	  						</td>
-	  					</tr>
-	  					<tr>
-	  						<td>Article 4</td>
-	  						<td>Categorie 3</td>
-	  						<td>10</td>
-	  						<td>20.00€</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-1">Détails</a>
-	  						</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-2">Réserver</a>
-	  						</td>
-	  					</tr>
-	  					<tr>
-	  						<td>Article 5</td>
-	  						<td>Categorie 3</td>
-	  						<td>10</td>
-	  						<td>20.00€</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-1">Détails</a>
-	  						</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-2">Réserver</a>
-	  						</td>
-	  					</tr>
+	  					
 	  				</tbody>
   				</table>
   				

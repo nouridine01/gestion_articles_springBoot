@@ -32,6 +32,14 @@ public class Article {
     public void setLouable(Boolean louable) {
         this.louable = louable;
     }
+    
+    public Boolean getAchetable() {
+    	return achetable;
+    }
+    
+    public void setAchetable(Boolean achetable) {
+    	this.achetable = achetable;
+    }
 
     public Long getId() {
         return id;
