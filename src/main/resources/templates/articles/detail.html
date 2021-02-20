@@ -25,8 +25,8 @@
 		  		
 			  	<div class="button-row">
 					<a th:href="@{/articles}" class="button button-back">Retour</a>	
-				    <a th:href="@{/editArticle(id=${article.id})}" class="button button-2">Modifier l'article</a>	
-				    <a th:href="@{/deleteArticle(id=${article.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer l'article</a>
+				    <a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/editArticle(id=${article.id})}" class="button button-2">Modifier l'article</a>	
+				    <a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/deleteArticle(id=${article.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer l'article</a>
 			    </div>
 		  		
 		   	</div>

@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ca.uqac.gestionarticles.service.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,6 +24,7 @@ public class ArticleController {
     private ArticleRepository articleRepository;
     @Autowired
     private CategorieRepository categorieRepository;
+    private Utils utils;
 
     @RequestMapping(value = "/articles")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -65,7 +67,7 @@ public class ArticleController {
     public String form (Model model) {
         Page<Categorie> categorieListe = categorieRepository.chercher("%%", PageRequest.of(0, 5));
         model.addAttribute("categorieListe", categorieListe.getContent());
-    	
+        
         model.addAttribute("article", new Article());
         return "articles/form";
     }

@@ -33,8 +33,14 @@
 	  						<td class="list-button">
 	  							<a th:href="@{/detailArticle(id=${a.id})}" class="button-2">Détails</a>
 	  						</td>
-	  						<td class="list-button">
-	  							<a href="#" class="button-1">Réserver</a>
+	  						<td sec:authorize="hasRole('ROLE_CLIENT')" class="list-button">
+	  							<a th:href="@{/}" class="button-1">Réserver</a>
+	  						</td>
+	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" class="list-button">
+	  							<a th:href="@{/}" class="button-1">Achat</a>
+	  						</td>
+	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" class="list-button">
+	  							<a th:href="@{/}" class="button-1">Location</a>
 	  						</td>
 	  					</tr>
 	  					
@@ -49,7 +55,7 @@
   					</ul>
   				</div>
   				
-  				<a href="createArticle" class="button button-1">Ajouter un article</a>
+  				<a sec:authorize="hasRole('ROLE_VENDEUR')" href="createArticle" class="button button-1">Ajouter un article</a>
 	  		</div>
 		    
 		</th:block>

@@ -35,7 +35,7 @@ public class AchatController {
     @Autowired
     private LocationRepository locationRepository;
 
-    @RequestMapping(value = "/Achat", method = RequestMethod.GET)
+    @RequestMapping(value = "/achat", method = RequestMethod.GET)
     public String achat (Model model , Long id, HttpServletRequest request) {
         model.addAttribute("article_id",id);
         return "achat/form";

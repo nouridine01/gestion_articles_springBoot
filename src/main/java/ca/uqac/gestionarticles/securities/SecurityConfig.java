@@ -24,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //on ajoute {noop} pour eviter le hachage avant verification du mot de passe
-        /*auth.inMemoryAuthentication().withUser("admin").password("{noop}passer123").roles("admin").roles("admin").
+        /*auth.inMemoryAuthentication().withUser("admin").password("{noop}passer123").roles("ADMIN").
                 and().withUser("user").password("passer123").roles("user");*/
 
         //3 type de config inMerory jdbc et userDetails Service c'est ce dernier que nous allons utiliser pour une config plus personnaliser
@@ -33,9 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll();
-        //declaration de l'authentification par formulaire
-        http.formLogin();
-
+    	
+    	http.csrf().disable()
+    		.authorizeRequests()
+    			.antMatchers("/", "/login", "/css/**").permitAll()
+    			.antMatchers("/delete*", "/create*", "/save*", "/edit*", "/update*").hasRole("VENDEUR")
+    			.antMatchers("/mes*").hasRole("CLIENT")
+    			.anyRequest().authenticated()
+    			.and()
+    		.formLogin()
+    			.loginPage("/login").defaultSuccessUrl("/articles", true).permitAll();
     }
 }
