@@ -55,7 +55,7 @@
   					</ul>
   				</div>
   				
-  				<a sec:authorize="hasRole('ROLE_VENDEUR')" href="createArticle" class="button button-1">Ajouter un article</a>
+  				<a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/createArticle}" class="button button-1">Ajouter un article</a>
 	  		</div>
 		    
 		</th:block>

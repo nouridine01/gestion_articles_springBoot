@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title th:text="${user.firstName} + ' ' + ${user.lastName}"></title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		
+		   	<div class="detail">
+		  		
+		  		<h2 th:text="|Détails de l'utilisateur n°${user.id} :|"></h2>	
+		  			
+		  		<p th:text="'Nom : ' + ${user.lastName}"></p>
+		  		<p th:text="'Prénom : '+ ${user.firstName}"></p>
+		  		<p th:text="'Login : ' + ${user.login}"></p>
+		  		<p th:text="'Mot de passe (hash) : ' + ${user.password}"></p>
+		  		<p th:text="'Pays : ' + ${user.pays}"></p>
+		  		<p th:text="'Actif ? : ' + (${user.active} ? 'Oui' : 'Non')"></p>
+		  		<p> Rôles : 
+		  			<span th:each="r:${user.roles}" th:text="${r.role} + ', '" th:remove="tag"></span>
+		  		</p>
+		  		
+			  	<div class="button-row">
+					<a th:href="@{/users}" class="button button-back">Retour</a>	
+				    <a th:href="@{/editUser(id=${user.id})}" class="button button-2">Modifier l'utilisateur</a>	
+				    <a  th:href="@{/deleteUser(id=${user.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer l'utilisateur</a>
+			    </div>
+		  		
+		   	</div>
+		    
+		</th:block>
+	</body>
+</html>

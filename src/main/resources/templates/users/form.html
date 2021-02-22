@@ -4,7 +4,7 @@
       layout:decorate="~{layout}">
       
 	<head>
-	    <title th:text="'Modifier ' + ${article.nom}"></title>
+	    <title>Créer un article</title>
 	    <meta charset="utf-8">
 	</head>
 	
@@ -13,10 +13,8 @@
 		
 		   	<div class="create-form">
 		  		
-		  		<h2 th:text="|Modifier l'article n°${article.id} :|"></h2>  	
-		  		<form th:action="@{updateArticle}" method="post" th:object="${article}">
-		  			
-		  			<input type="hidden" th:field="*{id}"/>
+		  		<h2>Nouvel article :</h2>  	
+		  		<form th:action="@{saveArticle}" method="post" th:object="${article}">
 		  			
 		  			<div>
 			  			<label for="nom"> Nom :</label>
@@ -35,13 +33,13 @@
 		  			
 		  			<div>
 			  			<label for="prix"> Prix :</label>
-			  			<input type="number" th:field=*{prix} required/>
+			  			<input type="number" th:field=*{prix} min="0" required/>
 			  			<span th:errors="${article.prix}" class="error"></span>
 		  			</div>
 		  			
 		  			<div>
 			  			<label for="quantite"> Quantité :</label>
-			  			<input type="number" th:field=*{quantite} required/>
+			  			<input type="number" th:field=*{quantite} min="0" required/>
 			  			<span th:errors="${article.quantite}" class="error"></span>
 		  			</div>
 		  			
@@ -52,14 +50,13 @@
 		  			</div>
 		  			
 		  			<div>
-			  			<p></p>
 			  			<label for="achetable">Disponible à la l'achat :</label>
 			  			<input type="checkbox" th:field="*{achetable}"/>
 			  			<span th:errors="${article.achetable}" class="error"></span>
 		  			</div>
 		  			
 			  		<div class="button-row">
-					    <a th:href="@{/detailArticle(id=${article.id})}" class="button button-back">Retour</a>	
+					    <a href="articles" class="button button-back">Retour</a>	
 					    <input type="submit" class="button button-1" value="Valider">
 				    </div>
 		  		
