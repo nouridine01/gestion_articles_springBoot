@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 public interface UserRepository extends JpaRepository<User,Long> {
     public User findByLogin(String login);
 
-    @Query("select u from User u where u.lastName like :x")
+    @Query("select u from User u where u.login like :x")
     public Page<User> chercher(@Param("x") String mc, Pageable pageable);
 
     @Query("select u from User u where u.lastName like :x")

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-public class UserDeatilsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     AccountService accountService;
     //c'est cette methode que le filtre de spring(spring security FilterChain) appel tjrs une fois qu'il recoit un login pour effectuer la verification

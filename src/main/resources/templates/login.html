@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title>Connexion</title>
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+			
+			<div id="connexion">
+			    <h1>Se connecter :</h1>
+			    <div class="connexion-form">
+			    	<form th:action="@{/login}" method="post">
+				    	<label for="username">Adresse email :</label>
+				    	<input type="text" id="username" name="username" required/>
+				    	<label for="password">Mot de passe :</label>
+				    	<input type="password" id="password" name="password" required/>
+				    	<input type="submit" class="button button-1" value="Se connecter">
+			    	</form>
+			    </div>
+			    <p th:if="${errorMessage}" class="error">Mauvaise adresse mail ou mot de passe</p>
+		    </div>
+		    
+		</th:block>
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title>Créer un article</title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		
+		   	<div class="create-form">
+		  		
+		  		<h2>Nouvel article :</h2>  	
+		  		<form th:action="@{saveArticle}" method="post" th:object="${article}">
+		  			
+		  			<div>
+			  			<label for="nom"> Nom :</label>
+			  			<input type="text" th:field="*{nom}" required/>
+			  			<span th:errors="${article.nom}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+			  			<label for="categorie"> Catégorie :</label>
+			  			<select th:field="*{categorie}" required>
+			  				<option value=""></option>
+			  				<option th:each="categorie:${categorieListe}" th:value="${categorie.id}" th:text="${categorie.nom}">
+			  			</select>
+			  			<span th:errors="${article.categorie}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+			  			<label for="prix"> Prix :</label>
+			  			<input type="number" th:field=*{prix} min="0" required/>
+			  			<span th:errors="${article.prix}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+			  			<label for="quantite"> Quantité :</label>
+			  			<input type="number" th:field=*{quantite} min="0" required/>
+			  			<span th:errors="${article.quantite}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+			  			<label for="louable">Disponible à la location :</label>
+			  			<input type="checkbox" th:field="*{louable}" th:checked="*{louable}"/>
+			  			<span th:errors="${article.louable}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+			  			<label for="achetable">Disponible à la l'achat :</label>
+			  			<input type="checkbox" th:field="*{achetable}"/>
+			  			<span th:errors="${article.achetable}" class="error"></span>
+		  			</div>
+		  			
+			  		<div class="button-row">
+					    <a href="articles" class="button button-back">Retour</a>	
+					    <input type="submit" class="button button-1" value="Valider">
+				    </div>
+		  		
+		  		</form>
+		  		
+		   	</div>
+		    
+		</th:block>
+	</body>
+</html>

@@ -71,7 +71,7 @@ public class ReservationController {
         return "reservations/form";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/saveReservation", method = RequestMethod.POST)
     public String save (Model model ,Long id,@Valid Reservation reservation, HttpServletRequest request) {
         reservation.setArticle(articleRepository.findById(id).get());
         reservation.getArticle().setQuantite(reservation.getArticle().getQuantite() - 1);

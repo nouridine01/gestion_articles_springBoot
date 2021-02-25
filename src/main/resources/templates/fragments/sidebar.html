@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<div th:fragment="sidebar" class="col-xs-4 col-md-3 col-lg-2 sidebar">
+			<div sec:authorize="isAuthenticated()" class="sidebar-user">
+				<span>Connecté en tant que :</span>
+				<span th:text="${#authentication.name}"></span>
+				<span><form th:action="@{/logout}" method="post"><input type="submit" value="Se déconnecter"></a></form></span>
+			</div>
+			<div sec:authorize="!isAuthenticated()" class="sidebar-user">
+				<span>Vous êtes actuellement</span>
+				<span>Déconnecté</span>
+			</div>
+			
+			<nav sec:authorize="isAuthenticated()" class="sidebar-nav">
+				<span>Navigation :</span>
+				<ul sec:authorize="hasRole('ROLE_CLIENT')">
+					<li><a th:href="@{/articles}">Faire une réservation</a></li>
+					<li><a th:href="@{/mesReservations}">Mes réservations</a></li>
+					<li><a th:href="@{/mesLocations}">Mes locations</a></li>
+					<li><a th:href="@{/mesAchats}">Mes achats</a></li>
+				</ul>
+				<ul sec:authorize="hasRole('ROLE_VENDEUR')">
+					<li><a th:href="@{/articles}">Location / Achat</a></li>
+					<li><a th:href="@{/categories}">Liste des catégories</a></li>
+					<li><a th:href="@{/clients}">Liste des clients</a></li>
+					<li><a th:href="@{/reservations}">Historique des réservations</a></li>
+					<li><a th:href="@{/locations}">Historique des locations</a></li>
+					<li><a th:href="@{/achats}">Historique des achats</a></li>
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/users}">Liste des utilisateurs</a>
+				</ul>
+			</nav>
+		</div>
+	</body>
+	
+</html>
