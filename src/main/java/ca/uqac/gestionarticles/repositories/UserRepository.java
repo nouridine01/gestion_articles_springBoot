@@ -27,4 +27,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
        ) t
  GROUP BY t.a
  ORDER BY t.a*/
+    //solution recuperer individeullement les elements dans chaque table et mettre le resultat dans un tab de Object
 }
