@@ -5,6 +5,7 @@ import ca.uqac.gestionarticles.entities.Categorie;
 import ca.uqac.gestionarticles.entities.User;
 import ca.uqac.gestionarticles.repositories.ArticleRepository;
 import ca.uqac.gestionarticles.repositories.CategorieRepository;
+import ca.uqac.gestionarticles.repositories.RoleRepository;
 import ca.uqac.gestionarticles.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,8 @@ public class UserController {
     private ArticleRepository articleRepository;
     @Autowired
     private CategorieRepository categorieRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @RequestMapping(value = "/users")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -68,6 +71,7 @@ public class UserController {
 
     @RequestMapping(value = "/createUser", method = RequestMethod.GET)
     public String form (Model model) {
+        model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("user", new User());
         return "users/form";
     }
@@ -76,11 +80,14 @@ public class UserController {
     public String save (Model model , @Valid User user, BindingResult br, HttpServletRequest request) {
 
         if(br.hasErrors()) {
+            model.addAttribute("roles", roleRepository.findAll());
             model.addAttribute("user",user);
             return "users/form";
         }
 
-
+        user.getRoles().forEach(role ->{
+            if (role.getRole().equals("ROLE_CLIENT"));
+        });
         model.addAttribute("user", userRepository.save(user));
         return "users/detail";
     }
@@ -97,6 +104,7 @@ public class UserController {
         user.setRoles(u.getRoles());
         user.setClient(u.getClient());
         userRepository.save(user);
+        model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("user",user);
         return "users/detail";
     }
