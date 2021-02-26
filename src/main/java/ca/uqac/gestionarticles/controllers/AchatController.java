@@ -35,12 +35,6 @@ public class AchatController {
     @Autowired
     private LocationRepository locationRepository;
 
-    @RequestMapping(value = "/achat", method = RequestMethod.GET)
-    public String achat (Model model , Long id, HttpServletRequest request) {
-        model.addAttribute("article_id",id);
-        return "achat/form";
-    }
-
     @RequestMapping(value = "/mesAchats", method = RequestMethod.GET)
     public String achat (Model model, @RequestParam(name = "page",defaultValue = "0") int page,Long article_id,
                             @RequestParam(name = "size",defaultValue = "5")int size) {

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title th:text="'Reservation n°' + ${reservation.id}">aaa</title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		
+		   	<div class="detail">
+		  		
+		  		<h2 th:text="|Réservation n°${reservation.id} :|"></h2>	
+		  			
+		  		<p th:text="'Article réservé : ' + ${reservation.article.nom}"></p>
+		  		<p th:text="'Type de réservation : ' + (${reservation.type eq 'achat'} ? 'Achat' : 'Location')"></p>
+		  		<p th:text="'Quantité : ' + ${reservation.quantity}"></p>
+		  		<p th:text="'Date de réservation : ' + ${reservation.date}"></p>
+		  		<p th:text="'Date de récupération : ' + ${#dates.format(reservation.date_recup, 'yyyy-MM-dd')}"></p>
+		  		<p th:text="'Réservation satisfaite : ' + (${reservation.satisfaite} ? 'Oui' : 'Non')"></p>
+		  		
+			  	<div class="button-row">
+					<a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/reservations}" class="button button-back">Retour</a>
+					<a sec:authorize="hasRole('ROLE_CLIENT')" th:href="@{/mesReservations}" class="button button-back">Retour</a>
+			    </div>
+		  		
+		   	</div>
+		    
+		</th:block>
+	</body>
+</html>

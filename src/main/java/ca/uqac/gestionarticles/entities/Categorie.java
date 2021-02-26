@@ -13,6 +13,7 @@ public class Categorie {
     private Long id;
     private String nom;
     @OneToMany(fetch= FetchType.LAZY)
+    @JoinColumn(name="categorie_id")
     private List<Article> articles= new ArrayList<>();
 
     public Long getId() {

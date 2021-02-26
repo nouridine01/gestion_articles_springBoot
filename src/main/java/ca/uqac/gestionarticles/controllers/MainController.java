@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class MainController implements ErrorController {
+public class MainController /*implements ErrorController*/ {
 
 	@GetMapping("/")
 	public String accueil(Model model) {
@@ -38,7 +38,7 @@ public class MainController implements ErrorController {
 		return "login";
 	}
 	
-	@RequestMapping("/error")
+	/* @RequestMapping("/error")
 	public String handleError() {
 		return "error";
 	}
@@ -46,5 +46,5 @@ public class MainController implements ErrorController {
 	@Override
 	public String getErrorPath() {
         return null;
-    }
+    } */
 }
