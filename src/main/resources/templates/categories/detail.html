@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title th:text="${categorie.nom}"></title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+<th:block layout:fragment="content">
+
+    <div class="detail">
+
+        <h2 th:text="|Détails de la catégorie n°${categorie.id} :|"></h2>
+
+        <p th:text="'Nom : ' + ${categorie.nom}"></p>
+        <p> Liste d'article :
+            <span th:each="a:${categorie.articles}" th:text="${a.nom} + ', '" th:remove="tag"></span>
+        </p>
+
+        <div class="button-row">
+            <a th:href="@{/categories}" class="button button-back">Retour</a>
+            <a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/editCategorie(id=${categorie.id})}" class="button button-2">Modifier la catégorie</a>
+            <a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/deleteCategorie(id=${categorie.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer la catégorie</a>
+        </div>
+
+        <p>Vous ne pouvez pas supprimer une catégorie si sa liste d'article n'est pas vide.</p>
+
+    </div>
+
+</th:block>
+</body>
+</html>

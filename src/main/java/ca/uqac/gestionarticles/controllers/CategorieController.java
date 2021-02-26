@@ -46,7 +46,7 @@ public class CategorieController {
             msg="impossible de supprimer cet article";
         }
 
-        return "redirect:/categories?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
+        return "redirect:/categories";
     }
 
     @RequestMapping(value = "/detailCategorie", method = RequestMethod.GET)
