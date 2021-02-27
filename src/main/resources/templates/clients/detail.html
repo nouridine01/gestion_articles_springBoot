@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title th:text="${client.user.firstName} + ' ' + ${client.user.lastName}"></title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		
+		   	<div class="detail">
+		  		
+		  		<h2 th:text="|Détails du client n°${client.id} :|"></h2>	
+		  			
+		  		<p th:text="'Nom : ' + ${client.user.lastName}"></p>
+		  		<p th:text="'Prénom : '+ ${client.user.firstName}"></p>
+		  		<p th:text="'E-Mail : ' + ${client.user.login}"></p>
+		  		
+			  	<div class="button-row">
+					<a th:href="@{/clients}" class="button button-back">Retour</a>	
+				    <a th:href="@{/editClient(id=${client.id})}" class="button button-2">Modifier le client</a>	
+				    <a  th:href="@{/deleteClient(id=${client.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer le client</a>
+			    </div>
+		  		
+		   	</div>
+		    
+		</th:block>
+	</body>
+</html>

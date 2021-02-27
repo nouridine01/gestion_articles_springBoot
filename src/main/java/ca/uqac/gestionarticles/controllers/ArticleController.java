@@ -85,7 +85,7 @@ public class ArticleController {
 
 
         model.addAttribute("article", articleRepository.save(article));
-        return "articles/detail";
+        return "redirect:/detailArticle?id=" + article.getId();
     }
 
     @RequestMapping(value = "/editArticle", method = RequestMethod.GET)
@@ -106,6 +106,6 @@ public class ArticleController {
         article.setCreateBy(a.getCreateBy());
         articleRepository.save(article);
         model.addAttribute("article",article);
-        return "articles/detail";
+        return "redirect:/detailArticle?id=" + article.getId();
     }
 }

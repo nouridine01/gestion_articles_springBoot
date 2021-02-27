@@ -46,7 +46,7 @@ public class ClientController {
         }catch (Exception e){
             msg="impossible de supprimer cet article";
         }
-        return "redirect:/clients?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
+        return "redirect:/clients";
     }
 
     @RequestMapping(value = "/detailClient", method = RequestMethod.GET)
@@ -54,8 +54,6 @@ public class ClientController {
         model.addAttribute("client",clientRepository.findById(id).get());
         return "clients/detail";
     }
-
-
 
     @RequestMapping(value = "/createClient", method = RequestMethod.GET)
     public String form (Model model) {
@@ -72,7 +70,7 @@ public class ClientController {
         }
 
         model.addAttribute("client", clientRepository.save(client));
-        return "clients/detail";
+        return "redirect:/detailClient?id=" + client.getId();
     }
 
     @RequestMapping(value = "/editClient", method = RequestMethod.GET)
@@ -90,6 +88,6 @@ public class ClientController {
         client.setReservations(c.getReservations());
         clientRepository.save(client);
         model.addAttribute("client",client);
-        return "clients/detail";
+        return "redirect:/detailClient?id=" + client.getId();
     }
 }

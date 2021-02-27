@@ -1,10 +1,14 @@
 package ca.uqac.gestionarticles.controllers;
 
+import ca.uqac.gestionarticles.entities.Client;
 import ca.uqac.gestionarticles.entities.User;
+import ca.uqac.gestionarticles.repositories.ClientRepository;
+import ca.uqac.gestionarticles.repositories.RoleRepository;
 import ca.uqac.gestionarticles.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +23,13 @@ import javax.validation.Valid;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+    @Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @RequestMapping(value = "/users")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -45,7 +56,7 @@ public class UserController {
         }catch (Exception e){
             msg="impossible de supprimer cet utilisateur";
         }
-        return "redirect:/users?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
+        return "redirect:/users";
     }
 
     @RequestMapping(value = "/detailUser", method = RequestMethod.GET)
@@ -70,9 +81,17 @@ public class UserController {
             return "users/form";
         }
 
-
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.getRoles().add(roleRepository.findByRole("ROLE_CLIENT"));
+        userRepository.save(user);
+        
+        Client c = new Client();      
+        c.setUser(user);     
+        
+        user.setClient(clientRepository.save(c));
+        
         model.addAttribute("user", userRepository.save(user));
-        return "users/detail";
+        return "redirect:/detailUser?id=" + user.getId();
     }
 
     @RequestMapping(value = "/editUser", method = RequestMethod.GET)
@@ -88,7 +107,7 @@ public class UserController {
         user.setClient(u.getClient());
         userRepository.save(user);
         model.addAttribute("user",user);
-        return "users/detail";
+        return "redirect:/detailUser?id=" + user.getId();
     }
 
     @RequestMapping(value = "/recherche", method = RequestMethod.GET)

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title>Clients</title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		  		
+	  		<div class="listing">
+	  				
+  				<h2>Liste des clients :</h2>
+  				<table>	
+	  				<thead>
+	  					<tr>
+	  						<th>Nom</th>
+	  						<th>Prénom</th>
+	  						<th>E-Mail</th>
+	  						<th>Pays</th>
+	  					</tr>
+	  				</thead>
+	  				<tbody>
+	  				
+	  					<tr th:each="c:${listes}">
+	  						<td th:text="${c.user.lastName}"></td>
+	  						<td th:text="${c.user.firstName}"></td>
+	  						<td th:text="${c.user.login}"></td>
+	  						<td th:text="${c.user.pays}"></td>
+	  						<td class="list-button">
+	  							<a th:href="@{/detailClient(id=${c.id})}" class="button-2">Détails</a>
+	  						</td>
+	  					</tr>
+	  					
+	  				</tbody>
+  				</table>
+  				
+  				<div class="pages">
+  					<ul>
+  						<li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
+  							<a th:href="@{/clients(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index+1}"></a>
+  						</li>
+  					</ul>
+  				</div>
+  				
+  				<a th:href="@{/createUser}" class="button button-1">Ajouter un utilisateur</a>
+	  		</div>
+		    
+		</th:block>
+	</body>
+</html>

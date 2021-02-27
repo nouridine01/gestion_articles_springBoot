@@ -66,7 +66,7 @@ public class ReservationController {
             reservation.setSatisfaite(true);
             reservationRepository.save(reservation);
             
-            return "achat/form";
+            return "redirect:/achats";
         }else{
             Location location = new Location();
             location.setArticle(reservation.getArticle());
@@ -90,9 +90,9 @@ public class ReservationController {
         reservation.getArticle().setQuantite(reservation.getArticle().getQuantite() - reservation.getQuantity());
         reservation.setClient(utils.getClient());
         reservation.setDate(utils.getDate());
-        reservationRepository.save(reservation);
-        model.addAttribute("reservation",reservation);
-        return "reservations/detail";
+        
+        model.addAttribute("reservation",reservationRepository.save(reservation));
+        return "redirect:/detailReservation?id=" + reservation.getId();
     }
 
     @RequestMapping(value = "/reservations", method = RequestMethod.GET)

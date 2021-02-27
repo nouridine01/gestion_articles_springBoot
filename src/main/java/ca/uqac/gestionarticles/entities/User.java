@@ -17,7 +17,7 @@ public class User {
     private String pays;
     private String lastName;
     private String firstName;
-    private Boolean active;
+    private Boolean active=true;
     @ManyToMany(fetch= FetchType.EAGER)
     private Collection<Role> roles=new ArrayList<>();
 

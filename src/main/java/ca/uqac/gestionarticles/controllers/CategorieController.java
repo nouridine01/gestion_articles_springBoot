@@ -55,8 +55,6 @@ public class CategorieController {
         return "categories/detail";
     }
 
-
-
     @RequestMapping(value = "/createCategorie", method = RequestMethod.GET)
     public String form (Model model) {
         model.addAttribute("categorie", new Categorie());
@@ -73,7 +71,7 @@ public class CategorieController {
 
 
         model.addAttribute("categorie", categorieRepository.save(categorie));
-        return "categories/detail";
+        return "redirect:/detailCategorie?id=" + categorie.getId();
     }
 
     @RequestMapping(value = "/editCategorie", method = RequestMethod.GET)
@@ -88,6 +86,6 @@ public class CategorieController {
         categorie.setArticles(c.getArticles());
         categorieRepository.save(categorie);
         model.addAttribute("categorie",categorie);
-        return "categories/detail";
+        return "redirect:/detailCategorie?id=" + categorie.getId();
     }
 }

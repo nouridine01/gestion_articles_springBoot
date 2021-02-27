@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ca.uqac.gestionarticles.entities.User;
+
 @Controller
 public class MainController /*implements ErrorController*/ {
 
@@ -37,6 +39,12 @@ public class MainController /*implements ErrorController*/ {
 		
 		return "login";
 	}
+	
+	@RequestMapping(value = "/inscription", method = RequestMethod.GET)
+    public String form (Model model) {
+        model.addAttribute("user", new User());
+        return "users/form";
+    }
 	
 	/* @RequestMapping("/error")
 	public String handleError() {
