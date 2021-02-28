@@ -4,6 +4,7 @@ import ca.uqac.gestionarticles.entities.*;
 import ca.uqac.gestionarticles.repositories.*;
 import ca.uqac.gestionarticles.service.AccountService;
 import ca.uqac.gestionarticles.service.Utils;
+import ca.uqac.gestionarticles.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class AchatController {
@@ -24,6 +26,8 @@ public class AchatController {
     private ReservationRepository reservationRepository;
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private ClientRepository clientRepository;
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -46,7 +50,7 @@ public class AchatController {
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
-        return "achat/achats";
+        return "achats/achats";
     }
     
     @RequestMapping(value = "/mesAchats", method = RequestMethod.GET)
@@ -59,13 +63,15 @@ public class AchatController {
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
-        return "achat/mesAchats";
+        return "achats/mesAchats";
     }
 
     @RequestMapping(value = "/createAchat", method = RequestMethod.GET)
     public String form (Model model , Long article_id, Date date) {
+        List<Client> clientListe = clientRepository.findAll();
+        model.addAttribute("clientListe", clientListe);
         model.addAttribute("achat", new Achat());
-        model.addAttribute("article_id",article_id);
+        model.addAttribute("article", articleRepository.findById(article_id).get());
 
         return "achats/form";
     }
@@ -79,16 +85,17 @@ public class AchatController {
             return "achats/form";
         }
         achat.setArticle(a);
+        achat.getArticle().setQuantite(achat.getArticle().getQuantite() - achat.getQuantite());
         achat.setDate(utils.getDate());
         achat.setCreateBy(utils.getUser());
         model.addAttribute("achat", achatRepository.save(achat));
-        return "achats/detail";
+        return "redirect:/detailAchat?id=" + achat.getId();
     }
 
     @RequestMapping(value = "/detailAchat", method = RequestMethod.GET)
     public String detail(Model model,Long id) {
         model.addAttribute("achat", achatRepository.findById(id).get());
-        return "achat/detail";
+        return "achats/detail";
     }
 
 }

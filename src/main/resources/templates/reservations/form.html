@@ -28,7 +28,7 @@
 		  			
 		  			<div>
 		  				<label for="quantity">Quantité :</label>
-			  			<input type="number" th:field=*{quantity} min="1" th:max="${article.quantite}" th:value="1" required/>
+			  			<input type="number" th:field=*{quantity} min="1" th:max="${article.quantite}" required/>
 			  			<span th:errors="${reservation.quantity}" class="error"></span>
 		  			</div>
 		  			

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+    <head>
+        <title>Acheter un article</title>
+        <meta charset="utf-8">
+    </head>
+
+    <body>
+        <th:block layout:fragment="content">
+
+            <div class="detail">
+
+                <h2 th:text="|Détails de l'article n°${article.id} :|"></h2>
+
+                <p th:text="'Nom : ' + ${article.nom}"></p>
+                <p th:text="'Catégorie : '+ ${article.categorie.nom}"></p>
+                <p th:text="'Prix : ' + ${article.prix} + '€'"></p>
+                <p th:text="'Quantité disponible : ' + ${article.quantite}"></p>
+
+            </div>
+
+            <div class="create-form">
+
+                <h2>Nouvel achat :</h2>
+                <form th:action="@{saveAchat(article_id=${article.id})}" method="post" th:object="${achat}">
+
+                    <div>
+                        <label for="quantite"> Quantité :</label>
+                        <input type="number" th:field=*{quantite} min="1" th:max="${article.quantite}" required/>
+                        <span th:errors="${achat.quantite}" class="error"></span>
+                    </div>
+
+                    <div>
+                        <label for="client"> Client :</label>
+                        <select th:field="*{client}" required>
+                            <option value=""></option>
+                            <option th:each="client:${clientListe}" th:value="${client.id}" th:text="${client.user.firstName + ' ' + client.user.lastName}">
+                        </select>
+                        <span th:errors="${achat.client}" class="error"></span>
+                    </div>
+
+                    <div class="button-row">
+                        <a href="articles" class="button button-back">Retour</a>
+                        <input type="submit" class="button button-1" value="Valider">
+                    </div>
+
+                </form>
+
+            </div>
+
+        </th:block>
+    </body>
+</html>

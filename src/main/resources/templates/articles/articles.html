@@ -37,10 +37,10 @@
 	  							<a th:href="@{/reserver(id=${a.id})}" class="button-1">Réserver</a>
 	  						</td>
 	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" class="list-button">
-	  							<a th:href="@{/}" class="button-1">Achat</a>
+	  							<a th:href="@{/createAchat(article_id=${a.id})}" class="button-1">Achat</a>
 	  						</td>
 	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" class="list-button">
-	  							<a th:href="@{/}" class="button-1">Location</a>
+	  							<a th:href="@{/createLocation(article_id=${a.id})}" class="button-1">Location</a>
 	  						</td>
 	  					</tr>
 	  					
