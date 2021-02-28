@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+    <head>
+        <title th:text="'Achat n°' + ${achat.id}"></title>
+        <meta charset="utf-8">
+    </head>
+
+    <body>
+        <th:block layout:fragment="content">
+
+            <div class="detail">
+
+                <h2 th:text="|Achat n°${achat.id} :|"></h2>
+
+                <p th:text="'Article acheté : ' + ${achat.article.nom}"></p>
+                <p th:text="'Client : ' + ${achat.client.user.firstName + ' ' + achat.client.user.lastName}"></p>
+                <p th:text="'Quantité : ' + ${achat.quantite}"></p>
+                <p th:text="'Date : ' + ${#dates.format(achat.date, 'yyyy-MM-dd')}"></p>
+
+                <div class="button-row">
+                    <a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/achats}" class="button button-back">Retour</a>
+                    <a sec:authorize="hasRole('ROLE_CLIENT')" th:href="@{/mesAchats}" class="button button-back">Retour</a>
+                </div>
+
+            </div>
+
+        </th:block>
+    </body>
+</html>

@@ -85,5 +85,11 @@ public class AchatController {
         return "achats/detail";
     }
 
+    @RequestMapping(value = "/detailAchat", method = RequestMethod.GET)
+    public String detail(Model model,Long id) {
+        model.addAttribute("achat", achatRepository.findById(id).get());
+        return "achat/detail";
+    }
+
 }
 
