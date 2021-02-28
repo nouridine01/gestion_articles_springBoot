@@ -29,19 +29,22 @@ public class LocationController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private Utils utils;
     @Autowired
-    private AchatRepository achatRepository;
-    @Autowired
     private LocationRepository locationRepository;
+    
+    @RequestMapping(value="/locations", method = RequestMethod.GET)
+    public String locations (Model model, @RequestParam(name = "page",defaultValue = "0") int page,
+            @RequestParam(name = "size",defaultValue = "5")int size) {
+    	
+    	Page<Location> liste = locationRepository.findAll(PageRequest.of(page, size));
+    	int[] pages = new int[liste.getTotalPages()];
 
-
-    @RequestMapping(value = "/RepousserDatelocation", method = RequestMethod.GET)
-    public String location (Model model , Long id,Long article_id, HttpServletRequest request) {
-        model.addAttribute("location_id",id);
-        return "locations/form";
+        model.addAttribute("listes", liste.getContent());
+        model.addAttribute("pages", pages);
+        model.addAttribute("size", size);
+        model.addAttribute("pageCourante", page);
+        return "locations/locations";
     }
 
     @RequestMapping(value = "/mesLocations", method = RequestMethod.GET)
@@ -55,6 +58,12 @@ public class LocationController {
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
         return "locations/meslocations";
+    }
+    
+    @RequestMapping(value = "/RepousserDatelocation", method = RequestMethod.GET)
+    public String location (Model model , Long id,Long article_id, HttpServletRequest request) {
+        model.addAttribute("location_id",id);
+        return "locations/form";
     }
 
     @RequestMapping(value = "/updateDateRetour", method = RequestMethod.POST)

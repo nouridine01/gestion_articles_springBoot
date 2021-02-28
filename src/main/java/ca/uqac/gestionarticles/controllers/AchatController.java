@@ -35,6 +35,20 @@ public class AchatController {
     @Autowired
     private LocationRepository locationRepository;
 
+    @RequestMapping(value="/achats", method = RequestMethod.GET)
+    public String achats (Model model, @RequestParam(name = "page",defaultValue = "0") int page,
+            @RequestParam(name = "size",defaultValue = "5")int size) {
+    	
+    	Page<Achat> liste = achatRepository.findAll(PageRequest.of(page, size));
+    	int[] pages = new int[liste.getTotalPages()];
+
+        model.addAttribute("listes", liste.getContent());
+        model.addAttribute("pages", pages);
+        model.addAttribute("size", size);
+        model.addAttribute("pageCourante", page);
+        return "achat/achats";
+    }
+    
     @RequestMapping(value = "/mesAchats", method = RequestMethod.GET)
     public String achat (Model model, @RequestParam(name = "page",defaultValue = "0") int page,Long article_id,
                             @RequestParam(name = "size",defaultValue = "5")int size) {
