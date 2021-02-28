@@ -42,9 +42,10 @@ public class ClientController {
 
         String msg="";
         try{
+        	clientRepository.findById(id).get().getUser().setActive(false);
             clientRepository.deleteById(id);
         }catch (Exception e){
-            msg="impossible de supprimer cet article";
+            msg="impossible de supprimer ce client";
         }
         return "redirect:/clients";
     }

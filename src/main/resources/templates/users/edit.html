@@ -18,10 +18,18 @@
 		  			
 		  			<input type="hidden" th:field="*{id}"/>
 		  			
+		  			<input type="hidden" th:field="*{password}"/>
+		  			
 		  			<div>
 			  			<label for="login">Adresse e-mail :</label>
 			  			<input type="email" th:field="*{login}" required/>
 			  			<span th:errors="${user.login}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+			  			<label for="password">Mot de passe :</label>
+			  			<input type="password" th:field="*{password}" required/>
+			  			<span th:errors="${user.password}" class="error"></span>
 		  			</div>
 		  			
 		  			<div>
