@@ -97,4 +97,10 @@ public class LocationController {
         return "locations/detail";
     }
 
+    @RequestMapping(value = "/detailLocation", method = RequestMethod.GET)
+    public String detail(Model model,Long id) {
+        model.addAttribute("location", locationRepository.findById(id).get());
+        return "locations/detail";
+    }
+
 }
