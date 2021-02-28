@@ -69,26 +69,35 @@ public class UserController {
 
     @RequestMapping(value = "/createUser", method = RequestMethod.GET)
     public String form (Model model) {
+    	model.addAttribute("listeRoles", roleRepository.findAll());
         model.addAttribute("user", new User());
         return "users/form";
     }
 
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-    public String save (Model model , @Valid User user, BindingResult br, HttpServletRequest request) {
+    public String save (Model model , @Valid User user, @RequestParam(value = "roles", required = false) int[] roles, BindingResult br, HttpServletRequest request) {
 
         if(br.hasErrors()) {
+        	model.addAttribute("listeRoles", roleRepository.findAll());
             model.addAttribute("user",user);
             return "users/form";
         }
-
+        
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.getRoles().add(roleRepository.findByRole("ROLE_CLIENT"));
+        
+        if(roles == null)
+            user.getRoles().add(roleRepository.findByRole("ROLE_CLIENT"));
+        else
+        	for(int i : roles)
+        		user.getRoles().add(roleRepository.findById((long) i).get());
+
         userRepository.save(user);
         
-        Client c = new Client();      
-        c.setUser(user);     
-        
-        user.setClient(clientRepository.save(c));
+        if(user.getRoles().contains(roleRepository.findByRole("ROLE_CLIENT"))) {
+	        Client c = new Client();      
+	        c.setUser(user);     
+	        user.setClient(clientRepository.save(c));
+        }
         
         model.addAttribute("user", userRepository.save(user));
         return "redirect:/detailUser?id=" + user.getId();
@@ -96,6 +105,7 @@ public class UserController {
 
     @RequestMapping(value = "/editUser", method = RequestMethod.GET)
     public String edit (Model model,Long id) {
+    	model.addAttribute("listeRoles", roleRepository.findAll());
         model.addAttribute("user",userRepository.findById(id).get());
         return "users/edit";
     }

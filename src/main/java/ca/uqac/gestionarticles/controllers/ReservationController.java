@@ -104,7 +104,7 @@ public class ReservationController {
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
-        return "reservations/liste";
+        return "reservations/reservations";
     }
 
     @RequestMapping(value = "/mesReservations", method = RequestMethod.GET)

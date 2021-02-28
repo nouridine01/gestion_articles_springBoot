@@ -46,6 +46,12 @@
 			  			<input type="text" th:field="*{pays}" required/>
 			  			<span th:errors="${user.pays}" class="error"></span>
 		  			</div>
+		  			
+		  			<div sec:authorize="hasRole('ROLE_ADMIN')">
+		  				<th:block th:each="r : ${listeRoles}">
+		  				<label th:text="${r.role} + ' :'"></label>
+		  				<input type="checkbox" name="roles" th:value="${r.id}"/><br>
+		  			</div>
 		  				
 			  		<div class="button-row">
 					    <a th:href="@{/users}" class="button button-back">Retour</a>	
