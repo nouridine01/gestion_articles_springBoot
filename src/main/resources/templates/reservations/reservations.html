@@ -20,6 +20,7 @@
 	  						<th>Id</th>
 	  						<th>Client</th>
 	  						<th>Nom article</th>
+							<th>Type</th>
 	  						<th>Quantite</th>
 	  						<th>Date de récupération</th>
 	  					</tr>
@@ -30,6 +31,7 @@
 	  						<td th:text="${r.id}"></td>
 	  						<td th:text="${r.client.user.firstName + ' ' + r.client.user.lastName}"></td>
 	  						<td th:text="${r.article.nom}"></td>
+							<td th:text="(${r.type eq 'achat'} ? 'Achat' : 'Location')"></td>
 	  						<td th:text="${r.quantity}"></td>
 	  						<td th:text="${#dates.format(r.date_recup, 'yyyy-MM-dd')}"></td>
 	  						<td class="list-button">
