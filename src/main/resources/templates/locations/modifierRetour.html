@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+    <head>
+        <title th:text="'Location n°' + ${location.id}"></title>
+        <meta charset="utf-8">
+    </head>
+
+    <body>
+        <th:block layout:fragment="content">
+
+            <div class="detail">
+
+                <h2 th:text="|Modification de la date de retour de la location n°${location.id} :|"></h2>
+
+                <p th:text="'Article loué : ' + ${location.article.nom}"></p>
+                <p th:text="'Client : ' + ${location.client.user.firstName + ' ' + location.client.user.lastName}"></p>
+                <p th:text="'Quantité : ' + ${location.quantite}"></p>
+                <p th:text="'Date de location : ' + ${#dates.format(location.date, 'yyyy-MM-dd')}"></p>
+
+                <form th:action="@{updateDateRetour}" method="post" th:object="${location}">
+
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div>
+                        <p for="date_retour">Rendre le :</p>
+                        <input type="date" th:field="*{date_retour}" required/>
+                        <span th:errors="${location.date_retour}" class="error"></span>
+                    </div>
+
+                    <div class="button-row">
+                        <a th:href="@{/detailLocation(id=${location.id})}" class="button button-back">Retour</a>
+                        <input type="submit" class="button button-1" value="Valider">
+                    </div>
+
+                </form>
+
+            </div>
+
+        </th:block>
+    </body>
+</html>

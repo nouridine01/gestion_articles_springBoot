@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -64,10 +68,11 @@ public class LocationController {
         return "locations/meslocations";
     }
     
-    @RequestMapping(value = "/RepousserDatelocation", method = RequestMethod.GET)
+    @RequestMapping(value = "/modifierDatelocation", method = RequestMethod.GET)
     public String location (Model model , Long id,Long article_id, HttpServletRequest request) {
-        model.addAttribute("location_id",id);
-        return "locations/form";
+        Location l = locationRepository.findById(id).get();
+        model.addAttribute("location", l);
+        return "locations/modifierRetour";
     }
 
     @RequestMapping(value = "/updateDateRetour", method = RequestMethod.POST)
@@ -75,7 +80,7 @@ public class LocationController {
         Location l=locationRepository.findById(location.getId()).get();
         l.setDate_retour(location.getDate_retour());
         locationRepository.save(l);
-        model.addAttribute("location",location);
+        model.addAttribute("location",l);
         return "locations/detail";
     }
 
