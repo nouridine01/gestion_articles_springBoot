@@ -14,7 +14,7 @@
 		   	<div class="create-form">
 		  		
 		  		<h2 th:text="|Réserver ${article.nom} :|"> :</h2>  	
-		  		<form th:action="@{saveReservation(id=${article.id})}" method="post" th:object="${reservation}">
+		  		<form th:action="@{saveReservation(article_id=${article.id})}" method="post" th:object="${reservation}">
 		  			
 		  			<div>
 		  				<label for="type">Réserver pour :</label>

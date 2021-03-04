@@ -39,7 +39,8 @@ public class ReservationController {
 
     @RequestMapping(value = "/reserver", method = RequestMethod.GET)
     public String reservation (Model model ,Long id, HttpServletRequest request) {
-    	model.addAttribute("reservation", new Reservation());
+    	Reservation r = new Reservation();
+    	model.addAttribute("reservation", r);
         model.addAttribute("article",articleRepository.findById(id).get());
         return "reservations/form";
     }
@@ -50,7 +51,7 @@ public class ReservationController {
     	return "reservations/detail";
     }
 
-    @RequestMapping(value = "/satisfaireReservation", method = RequestMethod.POST)
+    @RequestMapping(value = "/satisfaireReservation", method = RequestMethod.GET)
     public String satisfairereservation (Model model , Long id, HttpServletRequest request) {
         Reservation reservation = reservationRepository.findById(id).get();
         String type = reservation.getType();
@@ -62,6 +63,7 @@ public class ReservationController {
             achat.setDate(utils.getDate());
             achat.setCreateBy(utils.getUser());
             model.addAttribute("achat", achat);
+            achatRepository.save(achat);
             
             reservation.setSatisfaite(true);
             reservationRepository.save(reservation);
@@ -76,6 +78,7 @@ public class ReservationController {
             location.setQuantite(reservation.getQuantity());
             location.setCreateBy(utils.getUser());
             model.addAttribute("location", location);
+            locationRepository.save(location);
             
             reservation.setSatisfaite(true);
             reservationRepository.save(reservation);
@@ -85,8 +88,8 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/saveReservation", method = RequestMethod.POST)
-    public String save (Model model ,Long id,@Valid Reservation reservation, HttpServletRequest request) {
-        reservation.setArticle(articleRepository.findById(id).get());
+    public String save (Model model, @Valid Reservation reservation, Long article_id, HttpServletRequest request) {
+        reservation.setArticle(articleRepository.findById(article_id).get());
         reservation.getArticle().setQuantite(reservation.getArticle().getQuantite() - reservation.getQuantity());
         reservation.setClient(utils.getClient());
         reservation.setDate(utils.getDate());
