@@ -37,9 +37,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.csrf().disable()
     		.authorizeRequests()
     			.antMatchers("/", "/login", "/inscription", "/saveUser" ,"/css/**").permitAll()
-    			/*.antMatchers("/users", "/*User").hasAnyRole("ADMIN")
-    			.antMatchers("/delete*", "/create*", "/save*", "/edit*", "/update*").hasRole("VENDEUR")
-    			.antMatchers("/mes*", "reserver*", "saveReservation").hasRole("CLIENT")*/
+    			.antMatchers("/deleteArticle", "/createArticle", "/saveArticle", "/editArticle", "/updateArticle",
+    					"/deleteCategorie", "/createCategorie", "/saveCategorie", "/editCategorie", "/updateCategorie",
+    					"/users", "/createUser", "/deleteUser", "/editUser", "/updateUser").hasRole("ADMIN")
+    			.antMatchers("/categories", "/detailCategorie", "/createUser", "/clients", "/deleteClient", 
+    					"/satisfaireReservation", "/reservations", "/achats", "/createAchat", "/saveAchat",
+    					"/locations", "/createLocation", "/saveLocation", "/detailUser",
+    					"/modifierDateLocation", "/updateDateRetour").hasAnyRole("ADMIN", "VENDEUR")
+    			.antMatchers("/mes*", "/reserver", "/saveReservation").hasRole("CLIENT")
     			.anyRequest().authenticated()
     			.and()
     		.formLogin()

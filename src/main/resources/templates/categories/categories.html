@@ -37,7 +37,7 @@
         <div class="pages">
             <ul>
                 <li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
-                    <a th:href="@{/categories(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index}"></a>
+                    <a th:href="@{/categories(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index+1}"></a>
                 </li>
             </ul>
         </div>

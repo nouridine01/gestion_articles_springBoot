@@ -1,24 +1,25 @@
 package ca.uqac.gestionarticles.controllers;
 
-import ca.uqac.gestionarticles.entities.Client;
-import ca.uqac.gestionarticles.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import ca.uqac.gestionarticles.entities.Client;
+import ca.uqac.gestionarticles.entities.User;
+import ca.uqac.gestionarticles.repositories.ClientRepository;
+import ca.uqac.gestionarticles.repositories.RoleRepository;
 
 @Controller
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @RequestMapping(value = "/clients")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -58,11 +59,12 @@ public class ClientController {
 
     @RequestMapping(value = "/createClient", method = RequestMethod.GET)
     public String form (Model model) {
-        model.addAttribute("client", new Client());
-        return "clients/form";
+    	model.addAttribute("listeRoles", roleRepository.findAll());
+        model.addAttribute("user", new User());
+        return "users/form";
     }
 
-    @RequestMapping(value = "/saveClient", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/saveClient", method = RequestMethod.POST)
     public String save (Model model , @Valid Client client, BindingResult br, HttpServletRequest request) {
 
         if(br.hasErrors()) {
@@ -90,5 +92,5 @@ public class ClientController {
         clientRepository.save(client);
         model.addAttribute("client",client);
         return "redirect:/detailClient?id=" + client.getId();
-    }
+    }*/
 }

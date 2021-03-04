@@ -22,8 +22,8 @@
 
         <div class="button-row">
             <a th:href="@{/categories}" class="button button-back">Retour</a>
-            <a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/editCategorie(id=${categorie.id})}" class="button button-2">Modifier la catégorie</a>
-            <a sec:authorize="hasRole('ROLE_VENDEUR')" th:href="@{/deleteCategorie(id=${categorie.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer la catégorie</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/editCategorie(id=${categorie.id})}" class="button button-2">Modifier la catégorie</a>
+            <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/deleteCategorie(id=${categorie.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer la catégorie</a>
         </div>
 
         <p>Vous ne pouvez pas supprimer une catégorie si sa liste d'article n'est pas vide.</p>
