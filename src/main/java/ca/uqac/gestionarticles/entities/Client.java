@@ -8,7 +8,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @OneToMany
+    @OneToMany(mappedBy = "client")
     List<Achat> achats = new ArrayList<>();
     @OneToMany(mappedBy = "client")
     List<Location> locations = new ArrayList<>();

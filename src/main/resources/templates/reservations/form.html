@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title th:text="'Réserver ' + ${article.nom}"></title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		
+		   	<div class="create-form">
+		  		
+		  		<h2 th:text="|Réserver ${article.nom} :|"> :</h2>  	
+		  		<form th:action="@{saveReservation(article_id=${article.id})}" method="post" th:object="${reservation}">
+		  			
+		  			<div>
+		  				<label for="type">Réserver pour :</label>
+		  				<select th:field="*{type}" required>
+		  					<option value=""></option>
+		  					<option th:if="${article.achetable}" value="achat">Un achat</option>
+		  					<option th:if="${article.louable}" value="location">Une location</option>
+		  				</select>
+		  				<span th:errors="${reservation.type}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+		  				<label for="quantity">Quantité :</label>
+			  			<input type="number" th:field=*{quantity} min="1" th:max="${article.quantite}" required/>
+			  			<span th:errors="${reservation.quantity}" class="error"></span>
+		  			</div>
+		  			
+		  			<div>
+		  				<label for="date_recup">Récupérer le :</label>
+		  				<input type="date" th:field="*{date_recup}" required/>
+			  			<span th:errors="${reservation.date_recup}" class="error"></span>
+		  			</div>
+		  			
+			  		<div class="button-row">
+					    <a href="articles" class="button button-back">Retour</a>	
+					    <input type="submit" class="button button-1" value="Valider">
+				    </div>
+		  		
+		  		</form>
+		  		
+		   	</div>
+		    
+		</th:block>
+	</body>
+</html>

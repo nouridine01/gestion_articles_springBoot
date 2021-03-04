@@ -22,7 +22,6 @@ public class Utils implements  UtilsInterface{
     }
 
     public User getUser(){
-    	System.out.println("AAAAA\nAAAAA\\nAAAAA\\nAAAAA\\nAAAAA\\n");
         return userRepository.findByLogin(accountService.getCurrentUserLogin());
     }
 

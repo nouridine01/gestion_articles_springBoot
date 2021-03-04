@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title>Articles</title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		  		
+	  		<div class="listing">
+	  				
+  				<h2>Historique des réservation :</h2>
+  				<table>	
+	  				<thead>
+	  					<tr>
+	  						<th>Id</th>
+	  						<th>Client</th>
+	  						<th>Nom article</th>
+	  						<th>Quantite</th>
+	  						<th>Date de récupération</th>
+	  					</tr>
+	  				</thead>
+	  				<tbody>
+	  				
+	  					<tr th:each="r:${listes}">
+	  						<td th:text="${r.id}"></td>
+	  						<td th:text="${r.client.user.firstName + ' ' + r.client.user.lastName}"></td>
+	  						<td th:text="${r.article.nom}"></td>
+	  						<td th:text="${r.quantity}"></td>
+	  						<td th:text="${#dates.format(r.date_recup, 'yyyy-MM-dd')}"></td>
+	  						<td class="list-button">
+	  							<a th:href="@{/detailReservation(id=${r.id})}" class="button-2">Détails</a>
+	  						</td>
+	  						<td class="list-button">
+	  							<a th:href="@{/satisfaireReservation(id=${r.id})}" class="button-1">Satisfaire</a>
+	  						</td>
+	  					</tr>
+	  					
+	  				</tbody>
+  				</table>
+  				
+  				<div class="pages">
+  					<ul>
+  						<li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
+  							<a th:href="@{/reservations(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index +1}"></a>
+  						</li>
+  					</ul>
+  				</div>
+  				
+	  		</div>
+		    
+		</th:block>
+	</body>
+</html>

@@ -36,13 +36,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	
     	http.csrf().disable()
     		.authorizeRequests()
-    			.antMatchers("/", "/login", "/css/**").permitAll()
-    			.antMatchers("/users", "/*User").hasAnyRole("ADMIN")
+    			.antMatchers("/", "/login", "/inscription", "/saveUser" ,"/css/**").permitAll()
+    			/*.antMatchers("/users", "/*User").hasAnyRole("ADMIN")
     			.antMatchers("/delete*", "/create*", "/save*", "/edit*", "/update*").hasRole("VENDEUR")
-    			.antMatchers("/mes*").hasRole("CLIENT")
+    			.antMatchers("/mes*", "reserver*", "saveReservation").hasRole("CLIENT")*/
     			.anyRequest().authenticated()
     			.and()
     		.formLogin()
-    			.loginPage("/login").defaultSuccessUrl("/articles", true).permitAll();
+    			.loginPage("/login")
+    			.defaultSuccessUrl("/articles", true).permitAll()
+    			.and()
+    		.logout()
+    			.logoutSuccessUrl("/login");
     }
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Catégories</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+<th:block layout:fragment="content">
+
+    <div class="listing">
+
+        <h2>Liste des catégories :</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="c:${listes}">
+                <td th:text="${c.id}"></td>
+                <td th:text="${c.nom}"></td>
+                <td class="list-button">
+                    <a th:href="@{/detailCategorie(id=${c.id})}" class="button-2">Détails</a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <div class="pages">
+            <ul>
+                <li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
+                    <a th:href="@{/categories(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index}"></a>
+                </li>
+            </ul>
+        </div>
+
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/createCategorie}" class="button button-1">Ajouter une catégorie</a>
+    </div>
+
+</th:block>
+</body>
+</html>

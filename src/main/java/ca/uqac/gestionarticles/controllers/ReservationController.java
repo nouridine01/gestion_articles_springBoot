@@ -39,12 +39,20 @@ public class ReservationController {
 
     @RequestMapping(value = "/reserver", method = RequestMethod.GET)
     public String reservation (Model model ,Long id, HttpServletRequest request) {
-        model.addAttribute("article_id",id);
+    	Reservation r = new Reservation();
+    	model.addAttribute("reservation", r);
+        model.addAttribute("article",articleRepository.findById(id).get());
         return "reservations/form";
     }
+    
+    @RequestMapping(value = "/detailReservation", method = RequestMethod.GET)
+    public String detailReservation (Model model, Long id) {
+    	model.addAttribute("reservation", reservationRepository.findById(id).get());
+    	return "reservations/detail";
+    }
 
-    @RequestMapping(value = "/satisfaireRservation", method = RequestMethod.POST)
-    public String satisfairereservation (Model model , Long id, Date date,HttpServletRequest request) {
+    @RequestMapping(value = "/satisfaireReservation", method = RequestMethod.GET)
+    public String satisfairereservation (Model model , Long id, HttpServletRequest request) {
         Reservation reservation = reservationRepository.findById(id).get();
         String type = reservation.getType();
         if(type.equals("achat")){
@@ -54,7 +62,13 @@ public class ReservationController {
             achat.setQuantite(reservation.getQuantity());
             achat.setDate(utils.getDate());
             achat.setCreateBy(utils.getUser());
+            model.addAttribute("achat", achat);
             achatRepository.save(achat);
+            
+            reservation.setSatisfaite(true);
+            reservationRepository.save(reservation);
+            
+            return "redirect:/achats";
         }else{
             Location location = new Location();
             location.setArticle(reservation.getArticle());
@@ -62,27 +76,29 @@ public class ReservationController {
             location.setCreateBy(utils.getUser());
             location.setDate(utils.getDate());
             location.setQuantite(reservation.getQuantity());
-            location.setDate_retour(date);
+            location.setCreateBy(utils.getUser());
+            model.addAttribute("location", location);
             locationRepository.save(location);
+            
+            reservation.setSatisfaite(true);
+            reservationRepository.save(reservation);
+            
+            return "redirect:/locations";
         }
-        reservation.setSatisfaite(true);
-        reservationRepository.save(reservation);
-        model.addAttribute("article_id",id);
-        return "reservations/form";
     }
 
     @RequestMapping(value = "/saveReservation", method = RequestMethod.POST)
-    public String save (Model model ,Long id,@Valid Reservation reservation, HttpServletRequest request) {
-        reservation.setArticle(articleRepository.findById(id).get());
-        reservation.getArticle().setQuantite(reservation.getArticle().getQuantite() - 1);
+    public String save (Model model, @Valid Reservation reservation, Long article_id, HttpServletRequest request) {
+        reservation.setArticle(articleRepository.findById(article_id).get());
+        reservation.getArticle().setQuantite(reservation.getArticle().getQuantite() - reservation.getQuantity());
         reservation.setClient(utils.getClient());
         reservation.setDate(utils.getDate());
-        reservationRepository.save(reservation);
-        model.addAttribute("reservation",reservation);
-        return "reservations/detail";
+        
+        model.addAttribute("reservation",reservationRepository.save(reservation));
+        return "redirect:/detailReservation?id=" + reservation.getId();
     }
 
-    @RequestMapping(value = "/reserverEnCours", method = RequestMethod.GET)
+    @RequestMapping(value = "/reservations", method = RequestMethod.GET)
     public String reservationEnCours (Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                                       @RequestParam(name = "size",defaultValue = "5")int size) {
         Page<Reservation> liste =reservationRepository.reservationEnCours( PageRequest.of(page, size) );
@@ -91,7 +107,7 @@ public class ReservationController {
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
-        return "reservations/liste";
+        return "reservations/reservations";
     }
 
     @RequestMapping(value = "/mesReservations", method = RequestMethod.GET)

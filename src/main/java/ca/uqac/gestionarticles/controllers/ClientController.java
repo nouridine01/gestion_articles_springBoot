@@ -1,7 +1,6 @@
 package ca.uqac.gestionarticles.controllers;
 
 import ca.uqac.gestionarticles.entities.Client;
-import ca.uqac.gestionarticles.entities.User;
 import ca.uqac.gestionarticles.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,8 +19,6 @@ import javax.validation.Valid;
 public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
-
-
 
     @RequestMapping(value = "/clients")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -74,7 +71,7 @@ public class ClientController {
             return "clients/form";
         }
 
-        model.addAttribute("client", client);
+        model.addAttribute("client", clientRepository.save(client));
         return "clients/detail";
     }
 

@@ -34,13 +34,13 @@
 	  							<a th:href="@{/detailArticle(id=${a.id})}" class="button-2">Détails</a>
 	  						</td>
 	  						<td sec:authorize="hasRole('ROLE_CLIENT')" class="list-button">
-	  							<a th:href="@{/}" class="button-1">Réserver</a>
+	  							<a th:href="@{/reserver(id=${a.id})}" class="button-1">Réserver</a>
 	  						</td>
 	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" class="list-button">
-	  							<a th:href="@{/}" class="button-1">Achat</a>
+	  							<a th:href="@{/createAchat(article_id=${a.id})}" class="button-1">Achat</a>
 	  						</td>
 	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" class="list-button">
-	  							<a th:href="@{/}" class="button-1">Location</a>
+	  							<a th:href="@{/createLocation(article_id=${a.id})}" class="button-1">Location</a>
 	  						</td>
 	  					</tr>
 	  					
@@ -50,7 +50,7 @@
   				<div class="pages">
   					<ul>
   						<li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
-  							<a th:href="@{/articles(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index}"></a>
+  							<a th:href="@{/articles(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index+1}"></a>
   						</li>
   					</ul>
   				</div>

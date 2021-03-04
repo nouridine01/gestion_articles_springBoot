@@ -4,7 +4,7 @@
       layout:decorate="~{layout}">
       
 	<head>
-	    <title>Utilisateurs</title>
+	    <title>Clients</title>
 	    <meta charset="utf-8">
 	</head>
 	
@@ -13,29 +13,25 @@
 		  		
 	  		<div class="listing">
 	  				
-  				<h2>Liste des utilisateurs :</h2>
+  				<h2>Liste des clients :</h2>
   				<table>	
 	  				<thead>
 	  					<tr>
 	  						<th>Nom</th>
 	  						<th>Prénom</th>
-	  						<th>Login</th>
+	  						<th>E-Mail</th>
 	  						<th>Pays</th>
-	  						<th>Rôles</th>
 	  					</tr>
 	  				</thead>
 	  				<tbody>
 	  				
-	  					<tr th:each="u:${listes}">
-	  						<td th:text="${u.lastName}"></td>
-	  						<td th:text="${u.firstName}"></td>
-	  						<td th:text="${u.login}"></td>
-	  						<td th:text="${u.pays}"></td>
-	  						<td>
-	  							<div th:each="r:${u.roles}" th:text="${r.role} + ','" th:remove="tag"></div>
-	  						</td>
+	  					<tr th:each="c:${listes}">
+	  						<td th:text="${c.user.lastName}"></td>
+	  						<td th:text="${c.user.firstName}"></td>
+	  						<td th:text="${c.user.login}"></td>
+	  						<td th:text="${c.user.pays}"></td>
 	  						<td class="list-button">
-	  							<a th:href="@{/detailUser(id=${u.id})}" class="button-2">Détails</a>
+	  							<a th:href="@{/detailClient(id=${c.id})}" class="button-2">Détails</a>
 	  						</td>
 	  					</tr>
 	  					
@@ -45,12 +41,12 @@
   				<div class="pages">
   					<ul>
   						<li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
-  							<a th:href="@{/users(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index+1}"></a>
+  							<a th:href="@{/clients(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index+1}"></a>
   						</li>
   					</ul>
   				</div>
   				
-  				<a th:href="@{/createUser}" class="button button-1">Ajouter un utilisateur</a>
+  				<a th:href="@{/createUser}" class="button button-1">Ajouter un client</a>
 	  		</div>
 		    
 		</th:block>

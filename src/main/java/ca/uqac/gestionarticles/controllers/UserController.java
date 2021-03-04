@@ -1,17 +1,14 @@
 package ca.uqac.gestionarticles.controllers;
 
-import ca.uqac.gestionarticles.entities.Article;
-import ca.uqac.gestionarticles.entities.Categorie;
 import ca.uqac.gestionarticles.entities.Client;
 import ca.uqac.gestionarticles.entities.User;
-import ca.uqac.gestionarticles.repositories.ArticleRepository;
-import ca.uqac.gestionarticles.repositories.CategorieRepository;
+import ca.uqac.gestionarticles.repositories.ClientRepository;
 import ca.uqac.gestionarticles.repositories.RoleRepository;
 import ca.uqac.gestionarticles.repositories.UserRepository;
-import ca.uqac.gestionarticles.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,21 +18,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class UserController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private ArticleRepository articleRepository;
-    @Autowired
-    private CategorieRepository categorieRepository;
+    private ClientRepository clientRepository;
     @Autowired
     private RoleRepository roleRepository;
     @Autowired
-    private AccountService accountService;
+	BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     @RequestMapping(value = "/users")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -62,7 +56,7 @@ public class UserController {
         }catch (Exception e){
             msg="impossible de supprimer cet utilisateur";
         }
-        return "redirect:/users?page="+page+"&mc="+mc+"&size="+size+"message="+msg;
+        return "redirect:/users";
     }
 
     @RequestMapping(value = "/detailUser", method = RequestMethod.GET)
@@ -75,29 +69,43 @@ public class UserController {
 
     @RequestMapping(value = "/createUser", method = RequestMethod.GET)
     public String form (Model model) {
-        model.addAttribute("roles", roleRepository.findAll());
+    	model.addAttribute("listeRoles", roleRepository.findAll());
         model.addAttribute("user", new User());
         return "users/form";
     }
 
     @RequestMapping(value = "/saveUser", method = RequestMethod.POST)
-    public String save (Model model , @Valid User user, BindingResult br, HttpServletRequest request) {
+    public String save (Model model , @Valid User user, @RequestParam(value = "roles", required = false) int[] roles, BindingResult br, HttpServletRequest request) {
 
         if(br.hasErrors()) {
-            model.addAttribute("roles", roleRepository.findAll());
+        	model.addAttribute("listeRoles", roleRepository.findAll());
             model.addAttribute("user",user);
             return "users/form";
         }
+        
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        
+        if(roles == null)
+            user.getRoles().add(roleRepository.findByRole("ROLE_CLIENT"));
+        else
+        	for(int i : roles)
+        		user.getRoles().add(roleRepository.findById((long) i).get());
 
-        user.getRoles().forEach(role ->{
-            if (role.getRole().equals("CLIENT")) user.setClient(new Client());
-        });
-        model.addAttribute("user", accountService.saveUser(user));
-        return "users/detail";
+        userRepository.save(user);
+        
+        if(user.getRoles().contains(roleRepository.findByRole("ROLE_CLIENT"))) {
+	        Client c = new Client();      
+	        c.setUser(user);     
+	        user.setClient(clientRepository.save(c));
+        }
+        
+        model.addAttribute("user", userRepository.save(user));
+        return "redirect:/detailUser?id=" + user.getId();
     }
 
     @RequestMapping(value = "/editUser", method = RequestMethod.GET)
     public String edit (Model model,Long id) {
+    	model.addAttribute("listeRoles", roleRepository.findAll());
         model.addAttribute("user",userRepository.findById(id).get());
         return "users/edit";
     }
@@ -107,10 +115,9 @@ public class UserController {
         User u = userRepository.findById(user.getId()).get();
         user.setRoles(u.getRoles());
         user.setClient(u.getClient());
-        accountService.saveUser(user);
-        model.addAttribute("roles", roleRepository.findAll());
+        userRepository.save(user);
         model.addAttribute("user",user);
-        return "users/detail";
+        return "redirect:/detailUser?id=" + user.getId();
     }
 
     @RequestMapping(value = "/recherche", method = RequestMethod.GET)
@@ -118,14 +125,12 @@ public class UserController {
                             @RequestParam(name = "mc",defaultValue = "") String mc,
                             @RequestParam(name = "size",defaultValue = "5")int size
                             ) {
-        Page<User> listeu =userRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
-        Page<Article> listea =articleRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
-        Page<Categorie> listec =categorieRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
-        List<Object> liste = new ArrayList<>();
-        liste.addAll(listec.getContent());
-        liste.addAll(listea.getContent());
-        liste.addAll(listeu.getContent());
-        model.addAttribute("listes", liste);
+        Page<Object> liste =userRepository.rechercher("%"+mc+"%", PageRequest.of(page, size) );
+        int[] pages = new int[liste.getTotalPages()];
+        model.addAttribute("listes", liste.getContent());
+        model.addAttribute("pages", pages);
+        model.addAttribute("size", size);
+        model.addAttribute("pageCourante", page);
         model.addAttribute("mc", mc);
         return "users/recherche";
     }

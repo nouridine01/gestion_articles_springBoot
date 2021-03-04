@@ -24,7 +24,7 @@ public class User {
     public Collection<Role> getRoles() {
         return roles;
     }
-    @OneToOne(mappedBy = "user",optional = true,cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user")
     private Client client;
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;

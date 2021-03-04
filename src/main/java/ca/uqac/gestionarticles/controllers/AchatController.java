@@ -38,7 +38,7 @@ public class AchatController {
     @RequestMapping(value = "/achat", method = RequestMethod.GET)
     public String achat (Model model , Long id, HttpServletRequest request) {
         model.addAttribute("article_id",id);
-        return "achats/form";
+        return "achat/form";
     }
 
     @RequestMapping(value = "/mesAchats", method = RequestMethod.GET)
@@ -51,7 +51,7 @@ public class AchatController {
         model.addAttribute("pages", pages);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
-        return "achats/mesAchats";
+        return "achat/mesAchats";
     }
 
     @RequestMapping(value = "/createAchat", method = RequestMethod.GET)

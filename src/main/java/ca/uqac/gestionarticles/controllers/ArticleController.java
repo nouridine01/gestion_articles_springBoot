@@ -65,9 +65,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/createArticle", method = RequestMethod.GET)
     public String form (Model model) {
-        Page<Categorie> categorieListe = categorieRepository.chercher("%%", PageRequest.of(0, 5));
-        model.addAttribute("categorieListe", categorieListe.getContent());
-        
+        model.addAttribute("categorieListe", categorieRepository.findAll());
         model.addAttribute("article", new Article());
         return "articles/form";
     }
@@ -76,23 +74,19 @@ public class ArticleController {
     public String save (Model model , @Valid Article article, BindingResult br, HttpServletRequest request) {
 
         if(br.hasErrors()) {
-            Page<Categorie> categorieListe = categorieRepository.chercher("%%", PageRequest.of(0, 5));
-            model.addAttribute("categorieListe", categorieListe.getContent()); 	
-        	
+            model.addAttribute("categorieListe", categorieRepository.findAll());
             model.addAttribute("article",article);
             return "articles/form";
         }
 
 
         model.addAttribute("article", articleRepository.save(article));
-        return "articles/detail";
+        return "redirect:/detailArticle?id=" + article.getId();
     }
 
     @RequestMapping(value = "/editArticle", method = RequestMethod.GET)
     public String edit (Model model,Long id) {
-        Page<Categorie> categorieListe = categorieRepository.chercher("%%", PageRequest.of(0, 5));
-        model.addAttribute("categorieListe", categorieListe.getContent());
-    	
+        model.addAttribute("categorieListe", categorieRepository.findAll());
         model.addAttribute("article",articleRepository.findById(id).get());
         return "articles/edit";
     }
@@ -106,6 +100,6 @@ public class ArticleController {
         article.setCreateBy(a.getCreateBy());
         articleRepository.save(article);
         model.addAttribute("article",article);
-        return "articles/detail";
+        return "redirect:/detailArticle?id=" + article.getId();
     }
 }
