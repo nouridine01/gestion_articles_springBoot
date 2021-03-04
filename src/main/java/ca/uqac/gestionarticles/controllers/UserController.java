@@ -2,11 +2,13 @@ package ca.uqac.gestionarticles.controllers;
 
 import ca.uqac.gestionarticles.entities.Article;
 import ca.uqac.gestionarticles.entities.Categorie;
+import ca.uqac.gestionarticles.entities.Client;
 import ca.uqac.gestionarticles.entities.User;
 import ca.uqac.gestionarticles.repositories.ArticleRepository;
 import ca.uqac.gestionarticles.repositories.CategorieRepository;
 import ca.uqac.gestionarticles.repositories.RoleRepository;
 import ca.uqac.gestionarticles.repositories.UserRepository;
+import ca.uqac.gestionarticles.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,6 +34,8 @@ public class UserController {
     private CategorieRepository categorieRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value = "/users")
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
@@ -86,9 +90,9 @@ public class UserController {
         }
 
         user.getRoles().forEach(role ->{
-            if (role.getRole().equals("ROLE_CLIENT"));
+            if (role.getRole().equals("CLIENT")) user.setClient(new Client());
         });
-        model.addAttribute("user", userRepository.save(user));
+        model.addAttribute("user", accountService.saveUser(user));
         return "users/detail";
     }
 
@@ -103,7 +107,7 @@ public class UserController {
         User u = userRepository.findById(user.getId()).get();
         user.setRoles(u.getRoles());
         user.setClient(u.getClient());
-        userRepository.save(user);
+        accountService.saveUser(user);
         model.addAttribute("roles", roleRepository.findAll());
         model.addAttribute("user",user);
         return "users/detail";
