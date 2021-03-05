@@ -36,7 +36,7 @@ public class UserController {
                         @RequestParam(name = "mc",defaultValue = "") String mc,
                         @RequestParam(name = "size",defaultValue = "5")int size,
                         @RequestParam(name = "message",defaultValue = "")String msg) {
-        Page<User> liste =userRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
+        Page<User> liste =userRepository.rechercher("%"+mc+"%", PageRequest.of(page, size) );
         int[] pages = new int[liste.getTotalPages()];
         model.addAttribute("listes", liste.getContent());
         model.addAttribute("pages", pages);
@@ -47,6 +47,7 @@ public class UserController {
         //retourne la vue employees.html
         return "users/users";
     }
+
 
     @RequestMapping(value = "/deleteUser", method = RequestMethod.GET)
     public String delete(Long id,String mc,String page,String size) {
@@ -120,7 +121,7 @@ public class UserController {
         return "redirect:/detailUser?id=" + user.getId();
     }
 
-    @RequestMapping(value = "/recherche", method = RequestMethod.GET)
+    /* @RequestMapping(value = "/recherche", method = RequestMethod.GET)
     public String recherche(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                             @RequestParam(name = "mc",defaultValue = "") String mc,
                             @RequestParam(name = "size",defaultValue = "5")int size
@@ -133,5 +134,5 @@ public class UserController {
         model.addAttribute("pageCourante", page);
         model.addAttribute("mc", mc);
         return "users/recherche";
-    }
+    } */
 }

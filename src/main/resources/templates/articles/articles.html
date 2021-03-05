@@ -14,6 +14,11 @@
 	  		<div class="listing">
 	  				
   				<h2>Liste des articles :</h2>
+  				<form th:action="@{/articles}" method="get" class="recherche">
+  					<label for="mc">Recherche : </label>
+  					<input type="text" id="mc" name="mc" th:value="${mc}" />
+  					<input type="submit" class="button button-1" value="Chercher">
+  				</form>
   				<table>	
 	  				<thead>
 	  					<tr>
@@ -36,11 +41,11 @@
 	  						<td sec:authorize="hasRole('ROLE_CLIENT')" class="list-button">
 	  							<a th:href="@{/reserver(id=${a.id})}" class="button-1">Réserver</a>
 	  						</td>
-	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" th:if="${article.achetable}" class="list-button">
-	  							<a th:href="@{/createAchat(article_id=${a.id})}" class="button-1">Achat</a>
-	  						</td>
-	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" th:if="${article.louable}" class="list-button">
+	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" th:if="${a.louable}" class="list-button">
 	  							<a th:href="@{/createLocation(article_id=${a.id})}" class="button-1">Location</a>
+	  						</td>
+	  						<td sec:authorize="hasRole('ROLE_VENDEUR')" th:if="${a.achetable}" class="list-button">
+	  							<a th:href="@{/createAchat(article_id=${a.id})}" class="button-1">Achat</a>
 	  						</td>
 	  					</tr>
 	  					

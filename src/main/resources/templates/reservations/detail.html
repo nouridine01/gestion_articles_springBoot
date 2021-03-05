@@ -28,6 +28,24 @@
 			    </div>
 		  		
 		   	</div>
+		   	
+		   	<div sec:authorize="hasRole('ROLE_VENDEUR')" class="create-form">
+		   	
+		   		<h2>Satisfaire la réservation :</h2>	   		
+		   		<form th:action="@{/satisfaireReservation(id=${reservation.id})}" method="post">
+		   			
+		   			<div th:if="${reservation.type eq 'location'}">
+                        <label for="date_retour">Rendre le :</label>
+                        <input type="date" id="date_retour" name="date_retour" required/>
+		   			</div>
+		   			
+		   			<div class="button-row">
+                        <input type="submit" class="button button-1" value="Valider">
+                    </div>
+		   		
+		   		</form>
+		   		
+		   	</div>
 		    
 		</th:block>
 	</body>

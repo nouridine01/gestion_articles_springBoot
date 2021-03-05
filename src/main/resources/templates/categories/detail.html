@@ -16,9 +16,9 @@
         <h2 th:text="|Détails de la catégorie n°${categorie.id} :|"></h2>
 
         <p th:text="'Nom : ' + ${categorie.nom}"></p>
-        <p> Liste d'article :
+        <!-- <p> Liste d'article :
             <span th:each="a:${categorie.articles}" th:text="${a.nom} + ', '" th:remove="tag"></span>
-        </p>
+        </p> -->
 
         <div class="button-row">
             <a th:href="@{/categories}" class="button button-back">Retour</a>

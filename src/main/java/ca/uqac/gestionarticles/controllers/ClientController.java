@@ -26,7 +26,7 @@ public class ClientController {
                         @RequestParam(name = "mc",defaultValue = "") String mc,
                         @RequestParam(name = "size",defaultValue = "5")int size,
                         @RequestParam(name = "message",defaultValue = "")String msg) {
-        Page<Client> liste =clientRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
+        Page<Client> liste =clientRepository.rechercher("%"+mc+"%", PageRequest.of(page, size) );
         int[] pages = new int[liste.getTotalPages()];
         model.addAttribute("listes", liste.getContent());
         model.addAttribute("pages", pages);

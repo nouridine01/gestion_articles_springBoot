@@ -14,6 +14,11 @@
 	  		<div class="listing">
 	  				
   				<h2>Liste des clients :</h2>
+  				<form th:action="@{/clients}" method="get" class="recherche">
+  					<label for="mc">Recherche : </label>
+  					<input type="text" id="mc" name="mc" th:value="${mc}" />
+  					<input type="submit" class="button button-1" value="Chercher">
+  				</form>
   				<table>	
 	  				<thead>
 	  					<tr>

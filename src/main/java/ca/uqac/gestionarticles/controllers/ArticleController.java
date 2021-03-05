@@ -26,7 +26,7 @@ public class ArticleController {
     private CategorieRepository categorieRepository;
     private Utils utils;
 
-    @RequestMapping(value = "/articles")
+    @RequestMapping(value = "/articles", method = RequestMethod.GET)
     public String index(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                         @RequestParam(name = "mc",defaultValue = "") String mc,
                         @RequestParam(name = "size",defaultValue = "5")int size,

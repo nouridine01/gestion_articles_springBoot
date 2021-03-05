@@ -1,24 +1,31 @@
 package ca.uqac.gestionarticles.controllers;
 
 
-import ca.uqac.gestionarticles.entities.Achat;
-import ca.uqac.gestionarticles.entities.Location;
-import ca.uqac.gestionarticles.entities.Reservation;
-import ca.uqac.gestionarticles.repositories.*;
-import ca.uqac.gestionarticles.service.AccountService;
-import ca.uqac.gestionarticles.service.Utils;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.Date;
+import ca.uqac.gestionarticles.entities.Achat;
+import ca.uqac.gestionarticles.entities.Location;
+import ca.uqac.gestionarticles.entities.Reservation;
+import ca.uqac.gestionarticles.repositories.AchatRepository;
+import ca.uqac.gestionarticles.repositories.ArticleRepository;
+import ca.uqac.gestionarticles.repositories.LocationRepository;
+import ca.uqac.gestionarticles.repositories.ReservationRepository;
+import ca.uqac.gestionarticles.repositories.UserRepository;
+import ca.uqac.gestionarticles.service.AccountService;
+import ca.uqac.gestionarticles.service.Utils;
 
 @Controller
 public class ReservationController {
@@ -51,8 +58,8 @@ public class ReservationController {
     	return "reservations/detail";
     }
 
-    @RequestMapping(value = "/satisfaireReservation", method = RequestMethod.GET)
-    public String satisfairereservation (Model model , Long id, HttpServletRequest request) {
+    @RequestMapping(value = "/satisfaireReservation", method = RequestMethod.POST)
+    public String satisfairereservation (Model model , Long id, @DateTimeFormat(pattern = "yyyy-MM-dd") Date date_retour, HttpServletRequest request) {
         Reservation reservation = reservationRepository.findById(id).get();
         String type = reservation.getType();
         if(type.equals("achat")){
@@ -75,6 +82,7 @@ public class ReservationController {
             location.setClient(reservation.getClient());
             location.setCreateBy(utils.getUser());
             location.setDate(utils.getDate());
+            location.setDate_retour(date_retour);
             location.setQuantite(reservation.getQuantity());
             location.setCreateBy(utils.getUser());
             model.addAttribute("location", location);

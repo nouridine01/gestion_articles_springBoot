@@ -220,6 +220,20 @@ input.button {
 	color: #444;
 }
 
+.listing .recherche {
+	margin-bottom: 10px;
+}
+
+.listing .recherche .button {
+	height: 30px;
+	width: auto;
+	margin-left: 5px;
+	padding: 0 10px;
+	background-color: #1D3557;
+	border-radius: 8px;
+	font-size: 1.3rem;
+}
+
 .listing table {
 	border-collapse: collapse;
 	margin-bottom: 35px;
@@ -250,10 +264,12 @@ input.button {
 }
 
 .listing .list-button a {
+	min-width: 65px;
 	padding: 5px;
 	border-radius: 5px;
 	color: white;
 	transition: filter 0.1s ease-in-out;
+	white-space: nowrap;
 }
 
 .listing .list-button a:hover {
