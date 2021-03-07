@@ -43,7 +43,7 @@ public class CategorieController {
         try{
             categorieRepository.deleteById(id);
         }catch (Exception e){
-            msg="impossible de supprimer cet article";
+        	return "redirect:/categories?message=Impossible de supprimer cette categorie";
         }
 
         return "redirect:/categories";

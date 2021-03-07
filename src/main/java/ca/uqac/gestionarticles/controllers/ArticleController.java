@@ -50,7 +50,7 @@ public class ArticleController {
         try{
             articleRepository.deleteById(id);
         }catch (Exception e){
-            msg="impossible de supprimer cet article";
+        	return "redirect:/articles?message=Impossible de supprimer cet article";
         }
         return "redirect:/articles";
     }

@@ -14,6 +14,7 @@
 	  		<div class="listing">
 	  				
   				<h2>Liste des utilisateurs :</h2>
+        		<p class="error" th:text="${message}"></p>
   				<form th:action="@{/users}" method="get" class="recherche">
   					<label for="mc">Recherche : </label>
   					<input type="text" id="mc" name="mc" th:value="${mc}" />

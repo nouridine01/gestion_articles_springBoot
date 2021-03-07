@@ -54,7 +54,8 @@
 		  			</div>
 		  				
 			  		<div class="button-row">
-					    <a th:href="@{/users}" class="button button-back">Retour</a>	
+					    <a sec:authorize="hasRole('ADMIN')" th:href="@{/users}" class="button button-back">Retour</a>
+					    <a sec:authorize="!hasRole('ADMIN')" th:href="@{/clients}" class="button button-back">Retour</a>		
 					    <input type="submit" class="button button-1" value="Valider">
 				    </div>
 		  		

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+      
+	<head>
+	    <title>Utilisateurs</title>
+	    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		<th:block layout:fragment="content">
+		  		
+	  		<div class="listing">
+	  				
+  				<h2>Recherche avancée :</h2>
+  				<form th:action="@{/recherche}" method="get" class="recherche">
+  					<label for="mc">Recherche : </label>
+  					<input type="text" id="mc" name="mc" th:value="${mc}" />
+  					<input type="submit" class="button button-1" value="Chercher">
+  				</form>
+  				<table>
+	  				<tbody>
+		  				<thead>
+		  					<tr>
+		  						<th>Résultats</th>
+		  						<th></th>
+		  						<th></th>
+		  						<th></th>
+		  					</tr>
+		  				</thead>
+	  					<tr th:each="o:${listes}">
+	  						<th:block th:if="${o instanceof T(ca.uqac.gestionarticles.entities.Article)}">
+	  							<td th:text="${o.nom}"></td>
+		  						<td th:text="${o.categorie.nom}"></td>
+		  						<td th:text="${o.quantite}"></td>
+		  						<td th:text="${o.prix} + '€'"></td>
+	  						</th:block>
+	  						<th:block th:if="${o instanceof T(ca.uqac.gestionarticles.entities.Categorie)}">
+	  							<td th:text="${o.nom}"></td>
+		  						<td></td>
+		  						<td></td>
+		  						<td></td>
+	  						</th:block>
+	  						<th:block th:if="${o instanceof T(ca.uqac.gestionarticles.entities.User)}">
+	  							<td th:text="${o.lastName}"></td>
+		  						<td th:text="${o.firstName}"></td>
+		  						<td th:text="${o.login}"></td>
+		  						<td th:text="${o.pays}"></td>
+	  						</th:block>
+	  					</tr>
+	  					
+	  				</tbody>
+  				</table>
+  				
+  				<div class="pages">
+  					<ul>
+  						<li th:class="${pageCourante}==${status.index}? 'page-active' :''" th:each="pa,status:${pages}">
+  							<a th:href="@{/recherche(page=${status.index}, size=${size}, mc=${mc})}" th:text="${status.index+1}"></a>
+  						</li>
+  					</ul>
+  				</div>
+	  		</div>
+		    
+		</th:block>
+	</body>
+</html>

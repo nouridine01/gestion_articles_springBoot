@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     			.antMatchers("/categories", "/detailCategorie", "/createUser", "/clients", "/deleteClient", 
     					"/satisfaireReservation", "/reservations", "/achats", "/createAchat", "/saveAchat",
     					"/locations", "/createLocation", "/saveLocation", "/detailUser",
-    					"/modifierDateLocation", "/updateDateRetour").hasAnyRole("ADMIN", "VENDEUR")
+    					"/modifierDateLocation", "/updateDateRetour", "/recherche").hasAnyRole("ADMIN", "VENDEUR")
     			.antMatchers("/mes*", "/reserver", "/saveReservation").hasRole("CLIENT")
     			.anyRequest().authenticated()
     			.and()

@@ -1,10 +1,11 @@
 package ca.uqac.gestionarticles.controllers;
 
-import ca.uqac.gestionarticles.entities.Client;
-import ca.uqac.gestionarticles.entities.User;
-import ca.uqac.gestionarticles.repositories.ClientRepository;
-import ca.uqac.gestionarticles.repositories.RoleRepository;
-import ca.uqac.gestionarticles.repositories.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,13 +17,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import ca.uqac.gestionarticles.entities.Article;
+import ca.uqac.gestionarticles.entities.Categorie;
+import ca.uqac.gestionarticles.entities.Client;
+import ca.uqac.gestionarticles.entities.User;
+import ca.uqac.gestionarticles.repositories.ArticleRepository;
+import ca.uqac.gestionarticles.repositories.CategorieRepository;
+import ca.uqac.gestionarticles.repositories.ClientRepository;
+import ca.uqac.gestionarticles.repositories.RoleRepository;
+import ca.uqac.gestionarticles.repositories.UserRepository;
 
 @Controller
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CategorieRepository categorieRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
@@ -55,7 +67,7 @@ public class UserController {
         try{
             userRepository.deleteById(id);
         }catch (Exception e){
-            msg="impossible de supprimer cet utilisateur";
+        	return "redirect:/users?message=Impossible de supprimer cet utilisateur";
         }
         return "redirect:/users";
     }
@@ -121,18 +133,22 @@ public class UserController {
         return "redirect:/detailUser?id=" + user.getId();
     }
 
-    /* @RequestMapping(value = "/recherche", method = RequestMethod.GET)
+    @RequestMapping(value = "/recherche", method = RequestMethod.GET)
     public String recherche(Model model, @RequestParam(name = "page",defaultValue = "0") int page,
                             @RequestParam(name = "mc",defaultValue = "") String mc,
                             @RequestParam(name = "size",defaultValue = "5")int size
                             ) {
-        Page<Object> liste =userRepository.rechercher("%"+mc+"%", PageRequest.of(page, size) );
-        int[] pages = new int[liste.getTotalPages()];
-        model.addAttribute("listes", liste.getContent());
-        model.addAttribute("pages", pages);
+        Page<User> listeu = userRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
+        Page<Categorie> listec = categorieRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
+        Page<Article> listea = articleRepository.chercher("%"+mc+"%", PageRequest.of(page, size) );
+        List<Object> liste = new ArrayList<>();
+        liste.addAll(listec.getContent());
+        liste.addAll(listea.getContent());
+        liste.addAll(listeu.getContent());
+        model.addAttribute("listes", liste);
         model.addAttribute("size", size);
         model.addAttribute("pageCourante", page);
         model.addAttribute("mc", mc);
         return "users/recherche";
-    } */
+    }
 }

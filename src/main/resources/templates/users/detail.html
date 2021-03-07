@@ -26,9 +26,10 @@
 		  		</p>
 		  		
 			  	<div class="button-row">
-					<a th:href="@{/users}" class="button button-back">Retour</a>	
-				    <a th:href="@{/editUser(id=${user.id})}" class="button button-2">Modifier l'utilisateur</a>	
-				    <a  th:href="@{/deleteUser(id=${user.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer l'utilisateur</a>
+					<a sec:authorize="hasRole('ADMIN')" th:href="@{/users}" class="button button-back">Retour</a>
+					<a sec:authorize="!hasRole('ADMIN')" th:href="@{/clients}" class="button button-back">Retour</a>	
+				    <a sec:authorize="hasRole('ADMIN')" th:href="@{/editUser(id=${user.id})}" class="button button-2">Modifier l'utilisateur</a>	
+				    <a sec:authorize="hasRole('ADMIN')" th:href="@{/deleteUser(id=${user.id})}" onclick="return confirm('Confirmer la supression ?')" class="button button-1">Supprimer l'utilisateur</a>
 			    </div>
 		  		
 		   	</div>
