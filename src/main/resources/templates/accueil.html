@@ -5,13 +5,18 @@
       
 	<head>
 	    <title>Accueil</title>
+	    <meta charset="utf-8">
 	</head>
 	
 	<body>
 		<th:block layout:fragment="content">
 		
 		   <div id="accueil">
-			    <h1>OUTILS 3000</h1>
+			    <h1 style="display: none">OUTILS 3000</h1>
+			    <img th:src="@{/img/outils3000.jpg}" class="logo">
+			    <h2>Le bon outil pour le bon travail.</h2>
+			    <p>Outils 3000 est un service en ligne permettant de réserver des outils en vue d'une location ou d'un achat dans un de nos magasins physiques. Vous pouvez également l'utiliser pour consulter la liste de vos derniers achats et locations, qu'ils aient été réservés au préalable ou non. Connectez vous dès maintenant afin d'accéder à la liste de nos articles disponibles.</p>		    
+			    <img th:src="@{/img/construction.jpg}" class="construction">
 			    <a th:href="@{/login}" class="button button-1">Se connecter</a>
 		    </div>
 		    

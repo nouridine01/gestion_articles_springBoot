@@ -15,13 +15,14 @@
 	
 	<body class="container-fluid">
 		<div id="wrapper" class="row">
-				<div th:replace="fragments/sidebar :: sidebar"></div>
+				<div sec:authorize="isAuthenticated()" th:replace="fragments/sidebar :: sidebar"></div>
 				
-				<div id="content-wrapper" class="col-xs-8 col-md-9 col-lg-10">
-				
+				<div sec:authorize="isAuthenticated()" id="content-wrapper" class="col-xs-8 col-md-9 col-lg-10">		
 					<div layout:fragment="content"></div>
-					
-					<footer th:replace="fragments/footer :: footer"></footer>
+				</div>
+				
+				<div sec:authorize="!isAuthenticated()" id="content-wrapper" class="col-xs-12">		
+					<div layout:fragment="content"></div>
 				</div>	
 		</div>
 	

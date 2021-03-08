@@ -93,9 +93,9 @@ footer {
 h1 {
 	margin-bottom: 35px;
 	text-align: center;
+	color: #333;
 	font-size: 5rem;
 	font-weight: 700;
-	color: #555;
 	text-decoration: underline;
 }
 
@@ -149,7 +149,28 @@ input.button {
 	display: flex;
 	flex-flow: column nowrap;
 	align-items: center;
-	text
+}
+
+#accueil .logo {
+	height: 150px;
+	margin: 35px 0 25px;
+}
+
+#accueil h2 {
+	margin: 0 0 25px;
+}
+
+#accueil p {
+	width: 500px;
+	margin-bottom: 35px;
+	text-align: center;
+	font-size: 1.5rem;
+}
+
+#accueil .construction {
+	height: 350px;
+	margin-bottom: 35px;
+	box-shadow: 5px 5px 5px rgba(0,0,0,0.2)
 }
 
 /* *** CONNEXION *** */
@@ -206,7 +227,7 @@ input.button {
 
 #erreur h2 {
 	margin-bottom: 25px;
-	color: #444;
+	color: #333;
 }
 
 /* *** TABLEAUX *** */
@@ -217,7 +238,7 @@ input.button {
 
 .listing h2 {
 	margin-bottom: 50px;
-	color: #444;
+	color: #333;
 }
 
 .listing .recherche {
@@ -242,12 +263,12 @@ input.button {
 .listing th {
 	background-color: #457B9D;
 	border: solid 2px #457B9D;
-	border-bottom: solid 2px #444;
+	border-bottom: solid 2px #333;
 	color: white;
 }
 
 .listing td {
-	border: solid 2px #444;
+	border: solid 2px #333;
 }
 
 .listing th, td {
@@ -299,7 +320,7 @@ input.button {
 	border-radius: 7px;
 	text-align: center;
 	vertical-align: middle;
-	color: #444;
+	color: #333;
 	transition: background-color 0.2s ease-in-out;
 }
 
@@ -321,7 +342,7 @@ input.button {
 
 .detail h2 {
 	margin-bottom: 35px;
-	color: #444;
+	color: #333;
 }
 
 .detail p {
@@ -337,7 +358,7 @@ input.button {
 
 .create-form h2 {
 	margin-bottom: 35px;
-	color: #444;
+	color: #333;
 }
 
 .create-form form div {
